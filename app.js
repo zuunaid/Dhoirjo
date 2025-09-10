@@ -335,6 +335,8 @@ async function initHome(){
 
       posts.push({ slug, title, date, category, tags, thumb, excerpt, body });
     }
+    // sort posts: newest first
+posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // taxonomy views
     const qCat = getParam('c');
@@ -568,4 +570,5 @@ function convertDigitsExceptArabic(root){
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
 
