@@ -408,6 +408,7 @@ async function initHome(){
           a.href = u.toString();
         }
         pagination.appendChild(a);
+        convertDigitsInTextNodes(pagination);
       }
     }
 
@@ -575,5 +576,6 @@ async function renderMoreSection(currentSlug){
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
 
 
