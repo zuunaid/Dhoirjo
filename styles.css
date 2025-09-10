@@ -157,7 +157,7 @@ main.container,
 }
 .thumb img{ width: 100%; height: 100%; object-fit: cover; }
 
-.post-card .title{ margin: 0 0 var(--space-2) 0; font-size: 20px; line-height: 1.5; }
+.post-card .title{ margin: 0 0 var(--space-2) 0; font-size: 20px; line-height: 1.7; }
 .post-card .title a{
   color: var(--ink); text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
@@ -297,5 +297,6 @@ main.container,
   /* Make the list thumbnail height a bit smaller on phones */
   .thumb { height: 160px; }
 }
+
 
 
