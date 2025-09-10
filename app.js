@@ -1,7 +1,7 @@
 /* ====== CONFIG ====== */
 const SITE = {
   user: 'zuunaid',     // your GitHub username
-  repo: 'Dhoirjo',     // your repository name
+  repo: 'Dhoirjo',     // your repository name (case-sensitive)
   branch: 'main',
   postsPerPage: 10
 };
@@ -12,8 +12,9 @@ const LOCAL = location.hostname === 'localhost' ||
               location.protocol === 'file:';
 
 /* ====== UTILS ====== */
-const $ = (sel, el=document) => el.querySelector(sel);
+const $  = (sel, el=document) => el.querySelector(sel);
 const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
 function basePath(){
   const p = location.pathname;
   return p.endsWith('/') ? p : p.replace(/\/[^\/]*$/, '/');
@@ -22,7 +23,7 @@ function resolveAsset(src){
   if (!src) return '';
   if (/^https?:\/\//i.test(src)) return src; // external
   if (src.startsWith('/')) src = src.slice(1); // strip leading slash
-  return basePath() + src; // make it relative to current directory
+  return basePath() + src; // relative to current directory
 }
 
 /* Bengali digits */
@@ -45,49 +46,43 @@ function readingTime(text){
   return `${toBnDigits(mins)} মিনিট`;
 }
 
-/* Simple front-matter parser */
-/* Robust front-matter parser (handles spaces, CRLF, BOM) */
+/* Robust front-matter parser */
 function parseFrontMatter(md){
-  // normalize line breaks and trim any BOM/leading spaces
   const src = md.replace(/\uFEFF/g, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n').trimStart();
-
-  // match ---\n … \n---
   const m = src.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
-  if (!m) return { fm: {}, body: src }; // no front-matter → return whole as body
+  if (!m) return { fm: {}, body: src };
 
   const yaml = m[1];
   const body = src.slice(m[0].length);
 
   const fm = {};
   yaml.split('\n').forEach(line=>{
-    // allow: key: value   or   key: "value"   or   key: 'value'
     const kv = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
     if(!kv) return;
     const key = kv[1].trim();
     let val = kv[2].trim();
-
-    // arrays like: [ "a", "b" ]  or ['a','b']
     if (val.startsWith('[') && val.endsWith(']')){
       try { fm[key] = JSON.parse(val.replace(/'/g,'"')); } catch { fm[key] = []; }
       return;
     }
-    // strip surrounding quotes if present
     if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))){
       val = val.slice(1,-1);
     }
     fm[key] = val;
   });
-
   return { fm, body };
 }
 
 /* Tiny Markdown → HTML (basic) */
 function mdToHtml(md){
   let html = md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // images (supports relative + absolute)
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m,alt,src) =>
-  `<img src="${resolveAsset(src)}" alt="${alt || ''}">`);
+    `<img src="${resolveAsset(src)}" alt="${alt || ''}">`);
+  // links
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m,txt,href)=>
     `<a href="${href}" target="_blank" rel="noopener">${txt}</a>`);
+  // headings, quotes, emphasis, lists
   html = html.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
   html = html.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
   html = html.replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
@@ -96,6 +91,7 @@ function mdToHtml(md){
   html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
   html = html.replace(/^(?:-|\*)\s+(.*)$/gm, '<li>$1</li>');
   html = html.replace(/(<li>[\s\S]*?<\/li>)/gms, '<ul>$1</ul>');
+  // paragraphs
   html = html.split('\n').map(line=>{
     if(!line.trim()) return '';
     if(/^<(h\d|ul|li|img|blockquote)/.test(line)) return line;
@@ -150,7 +146,6 @@ async function downscaleImages(container, maxW=1600, quality=0.82){
 /* ====== DATA LOADERS (LOCAL vs GITHUB) ====== */
 async function listPosts(){
   if (LOCAL){
-    // Try local manifest
     try{
       const res = await fetch('posts/index.json', { cache: 'no-store' });
       if(res.ok){
@@ -158,10 +153,8 @@ async function listPosts(){
         return arr.slice().sort().reverse();
       }
     }catch(e){}
-    // Fallback: built-in sample (no files needed)
     return ['__inline-sample__'];
   }
-  // GitHub mode
   const url = `https://api.github.com/repos/${SITE.user}/${SITE.repo}/contents/posts?ref=${SITE.branch}`;
   const res = await fetch(url);
   if(!res.ok) throw new Error('Failed to list posts from GitHub');
@@ -173,7 +166,6 @@ async function listPosts(){
 async function fetchPostByName(name){
   if (LOCAL){
     if (name === '__inline-sample__'){
-      // Minimal inline sample so local always renders something
       return `---
 title: "লোকাল টেস্ট পোস্ট"
 date: "2025-07-24"
@@ -198,7 +190,6 @@ Separate Arabic line:
     if(!res.ok) throw new Error('Local post not found: '+name);
     return await res.text();
   }
-  // GitHub mode
   const raw = `https://raw.githubusercontent.com/${SITE.user}/${SITE.repo}/${SITE.branch}/posts/${name}`;
   const res = await fetch(raw, { cache: 'no-store' });
   if(!res.ok) throw new Error('Post not found: '+name);
@@ -217,27 +208,7 @@ function makeExcerpt(text, words=38){
 }
 function getParam(key){ return new URL(location.href).searchParams.get(key); }
 
-/* ====== Theme Toggle ====== */
-function initTheme(){
-  const root = document.documentElement;
-  const btn = $('#themeToggle');
-  const saved = localStorage.getItem('theme');
-  if (saved === 'light' || saved === 'dark'){
-    root.setAttribute('data-theme', saved);
-  } else {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-  }
-  if(btn){
-    btn.addEventListener('click', ()=>{
-      const cur = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', cur);
-      localStorage.setItem('theme', cur);
-    });
-  }
-}
-
-/* ====== Search UI (glitch-free) ====== */
+/* ====== Search UI ====== */
 function initSearchUI(){
   const wrap  = document.querySelector('.search-wrap');
   const btn   = document.querySelector('#searchOpen');
@@ -278,8 +249,8 @@ function initSearchUI(){
 
 /* ====== Hamburger Menu ====== */
 function initMenu(){
-  const wrap = document.querySelector('.menu');
-  const btn  = document.querySelector('#menuBtn');
+  const wrap  = document.querySelector('.menu');
+  const btn   = document.querySelector('#menuBtn');
   const panel = document.querySelector('#menuPanel');
   if(!wrap || !btn || !panel) return;
 
@@ -315,9 +286,9 @@ async function initHome(){
   });
 
   const view = getParam('view');
-  const listing = $('#listing');
+  const listing    = $('#listing');
   const pagination = $('#pagination');
-  const taxCloud = $('#taxCloud');
+  const taxCloud   = $('#taxCloud');
 
   try{
     const names = await listPosts();
@@ -327,21 +298,21 @@ async function initHome(){
       const { fm, body } = parseFrontMatter(md);
       const slug = name === '__inline-sample__' ? 'sample' : nameToSlug(name);
       const title = fm.title || slug;
-      const date = fm.date || '2025-01-01';
+      const date  = fm.date || '2025-01-01';
       const category = fm.category || 'বিবিধ';
-      const tags = Array.isArray(fm.tags) ? fm.tags : [];
+      const tags  = Array.isArray(fm.tags) ? fm.tags : [];
       const thumb = fm.thumbnail || '';
       const excerpt = fm.excerpt || makeExcerpt(body, 38);
-
       posts.push({ slug, title, date, category, tags, thumb, excerpt, body });
     }
-    // sort posts: newest first
-posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // newest first
+    posts.sort((a,b)=> new Date(b.date) - new Date(a.date));
 
     // taxonomy views
     const qCat = getParam('c');
     const qTag = getParam('t');
-    const q = getParam('q');
+    const q    = getParam('q');
 
     if (view==='categories'){
       taxCloud.hidden = false;
@@ -359,7 +330,6 @@ posts.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
 
     let filtered = posts.slice();
-
     if(qCat) filtered = filtered.filter(p => p.category === qCat);
     if(qTag) filtered = filtered.filter(p => p.tags.includes(qTag));
 
@@ -379,17 +349,18 @@ posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     function drawList(arr){
       listing.innerHTML = '';
-      const page = parseInt(getParam('page') || '1', 10);
+      const page  = parseInt(getParam('page') || '1', 10);
       const start = (page-1)*SITE.postsPerPage;
       const items = arr.slice(start, start+SITE.postsPerPage);
+
       for (const p of items){
         const card = document.createElement('article');
         card.className = 'post-card';
 
-        const thumb = p.thumb ? `
-  <a class="thumb" href="post.html?slug=${encodeURIComponent(p.slug)}">
-    <img src="${resolveAsset(p.thumb)}" alt="">
-  </a>` : `<div class="thumb" style="display:none"></div>`;
+        const thumbHtml = p.thumb ? `
+          <a class="thumb" href="post.html?slug=${encodeURIComponent(p.slug)}">
+            <img src="${resolveAsset(p.thumb)}" alt="">
+          </a>` : ``;
 
         const meta = `
           <div class="meta">
@@ -401,21 +372,23 @@ posts.sort((a, b) => new Date(b.date) - new Date(a.date));
           </div>`;
 
         card.innerHTML = `
-  ${thumb}
-  <div class="content">
-    <h2 class="title"><a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a></h2>
-    <p class="excerpt">${p.excerpt}</p>
-    <a class="btn-outline-black" href="post.html?slug=${encodeURIComponent(p.slug)}">আরো পড়ুন</a>
-    ${meta}
-  </div>`;
+          ${thumbHtml}
+          <div class="content">
+            <h2 class="title"><a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a></h2>
+            <p class="excerpt">${p.excerpt}</p>
+            <a class="btn-outline-black" href="post.html?slug=${encodeURIComponent(p.slug)}">আরো পড়ুন</a>
+            ${meta}
+          </div>`;
         listing.appendChild(card);
+
+        // hide thumb if image fails
         const img = card.querySelector('.thumb img');
-if (img) {
-  img.addEventListener('error', () => {
-    const t = img.closest('.thumb');
-    if (t) t.style.display = 'none';
-  });
-}
+        if (img) {
+          img.addEventListener('error', () => {
+            const t = img.closest('.thumb');
+            if (t) t.remove();
+          });
+        }
       }
       listing.innerHTML = listing.innerHTML.replace(/\d/g, d=>BN_DIGITS[d]);
     }
@@ -474,7 +447,7 @@ async function initPost(){
     $('#postTitle').textContent = 'পোস্ট পাওয়া যায়নি';
     return;
   }
-  await renderMoreSection(slug);
+
   try{
     const mdName = slug === 'sample' && LOCAL ? '__inline-sample__' : slugToName(slug);
     const md = await fetchPostByName(mdName);
@@ -482,20 +455,19 @@ async function initPost(){
     const html = mdToHtml(body);
 
     $('#postTitle').textContent = fm.title || slug;
-    $('#postMeta').textContent = `${formatBnDate(fm.date || '2025-01-01')} · ${readingTime(body)}`;
+    $('#postMeta').textContent  = `${formatBnDate(fm.date || '2025-01-01')} · ${readingTime(body)}`;
 
     if (fm.thumbnail){
-  $('#postCoverImg').src = resolveAsset(fm.thumbnail);
-  $('#postCoverImg').alt = fm.title || '';
-  $('#postCover').hidden = false;
-}
+      $('#postCoverImg').src  = resolveAsset(fm.thumbnail);
+      $('#postCoverImg').alt  = fm.title || '';
+      $('#postCover').hidden  = false;
+    }
 
     const bodyEl = $('#postBody');
     bodyEl.innerHTML = html;
 
     enhanceArabic(document);
     await downscaleImages(bodyEl, 1600, 0.82);
-
     convertDigitsExceptArabic(bodyEl);
 
     const tags = Array.isArray(fm.tags) ? fm.tags : [];
@@ -506,8 +478,8 @@ async function initPost(){
     }
 
     const share = $('#shareRow');
-    const url = location.href;
-    const text = encodeURIComponent(fm.title || 'ধৈর্য');
+    const url   = location.href;
+    const text  = encodeURIComponent(fm.title || 'ধৈর্য');
     share.innerHTML = [
       `<a target="_blank" rel="noopener" href="https://wa.me/?text=${text}%20${encodeURIComponent(url)}">WhatsApp</a>`,
       `<a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}">Facebook</a>`,
@@ -515,7 +487,32 @@ async function initPost(){
       `<a target="_blank" rel="noopener" href="https://t.me/share/url?url=${encodeURIComponent(url)}&text=${text}">Telegram</a>`
     ].join(' · ');
     share.hidden = false;
-// === Related posts ===
+
+    // Render "আরও পড়ুন" grid (2×2)
+    await renderMoreSection(slug);
+
+  }catch(err){
+    $('#postTitle').textContent = 'পোস্ট লোড ব্যর্থ';
+    console.error(err);
+  }
+}
+
+/* Convert digits → Bengali except Arabic blocks */
+function convertDigitsExceptArabic(root){
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node){
+      if (node.parentElement && (node.parentElement.classList.contains('ar-inline') || node.parentElement.classList.contains('ar-separate'))){
+        return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n => n.nodeValue = toBnDigits(n.nodeValue));
+}
+
+/* ====== Related posts (আরও পড়ুন) 2×2 grid ====== */
 async function renderMoreSection(currentSlug){
   try{
     const names = await listPosts();
@@ -536,7 +533,7 @@ async function renderMoreSection(currentSlug){
       });
     }
 
-    // newest first, then pick 4
+    // newest first -> pick 4
     posts.sort((a,b)=> new Date(b.date) - new Date(a.date));
     const pick = posts.slice(0, 4);
 
@@ -561,94 +558,7 @@ async function renderMoreSection(currentSlug){
       `;
     }).join('');
 
-    // convert digits → Bengali
-    grid.innerHTML = grid.innerHTML.replace(/\d/g, d => BN_DIGITS[d]);
-
-  }catch(e){
-    console.error('More section failed:', e);
-  }
-}
-  // pick 3 other random posts, not the current one
-  const others = posts.filter(p => p.slug !== slug).sort(()=>0.5 - Math.random()).slice(0,3);
-
-  if (others.length){
-    const section = $('#relatedPosts');
-    const grid = section.querySelector('.related-grid');
-    grid.innerHTML = others.map(p => `
-      <a class="related-card" href="post.html?slug=${encodeURIComponent(p.slug)}">
-        ${p.thumb ? `<div class="thumb"><img src="${resolveAsset(p.thumb)}" alt=""></div>` : `<div class="thumb" style="display:none"></div>`}
-        <div class="info">
-          <h3 class="title">${p.title}</h3>
-          <p class="excerpt">${p.excerpt}</p>
-        </div>
-      </a>
-    `).join('');
-    section.hidden = false;
-  }
-}catch(e){ console.error('Related posts failed', e); }
-  }catch(err){
-    $('#postTitle').textContent = 'পোস্ট লোড ব্যর্থ';
-    console.error(err);
-  }
-}
-
-/* Convert digits → Bengali except Arabic blocks */
-function convertDigitsExceptArabic(root){
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-    acceptNode(node){
-      if (node.parentElement && (node.parentElement.classList.contains('ar-inline') || node.parentElement.classList.contains('ar-separate'))){
-        return NodeFilter.FILTER_REJECT;
-      }
-      return NodeFilter.FILTER_ACCEPT;
-    }
-  });
-  const nodes = [];
-  while(walker.nextNode()) nodes.push(walker.currentNode);
-  nodes.forEach(n => n.nodeValue = toBnDigits(n.nodeValue));
-}
-async function renderMoreSection(currentSlug){
-  try{
-    const names = await listPosts();
-    const posts = [];
-
-    for (const name of names){
-      const slug = nameToSlug(name);
-      if (slug === currentSlug) continue; // skip current
-
-      const md = await fetchPostByName(name);
-      const { fm, body } = parseFrontMatter(md);
-      posts.push({
-        slug,
-        title: fm.title || slug,
-        date: fm.date || '1970-01-01',
-        thumb: fm.thumbnail || '',
-        excerpt: fm.excerpt || makeExcerpt(body, 26)
-      });
-    }
-
-    // Newest first
-    posts.sort((a,b)=> new Date(b.date) - new Date(a.date));
-
-    // Pick top 4
-    const pick = posts.slice(0, 4);
-    const grid = document.getElementById('moreGrid');
-    if (!grid) return;
-
-    grid.innerHTML = pick.map(p => `
-      <article class="more-card">
-        ${p.thumb ? `
-  <a class="more-thumb" href="post.html?slug=${encodeURIComponent(p.slug)}">
-    <img src="${resolveAsset(p.thumb)}" alt="">
-  </a>
-` : ``}
-        <h3 class="more-title">
-          <a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a>
-        </h3>
-        <p class="more-excerpt">${p.excerpt}</p>
-      </article>
-    `).join('');
-
-    // Bengali digits
+    // Bengali digits in the grid
     grid.innerHTML = grid.innerHTML.replace(/\d/g, d => BN_DIGITS[d]);
 
   }catch(e){
@@ -658,8 +568,3 @@ async function renderMoreSection(currentSlug){
 
 /* Expose */
 window.Blog = { initHome, initPost };
-
-
-
-
-
