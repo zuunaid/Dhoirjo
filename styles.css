@@ -238,3 +238,22 @@ main.container,
 .more-title{ font-size: 1.05rem; line-height: 1.35; }
 .more-title a{ text-decoration: none; }
 .more-excerpt{ font-size: .95rem; opacity: .85; }
+
+/* === Wider, fluid reading width for posts (desktop friendly) === */
+:root{
+  /* min 720px, grows with viewport, max 1080px */
+  --read: clamp(720px, 78vw, 1080px);
+}
+
+/* keep the article centered and add responsive side padding */
+.post{
+  max-width: var(--read);
+  margin-inline: auto;
+  padding-inline: clamp(12px, 3vw, 28px);
+}
+
+/* Optional: slightly scale body text on large screens */
+.post-body{
+  font-size: clamp(16px, 0.9vw + 12px, 20px);
+  line-height: 1.85;
+}
