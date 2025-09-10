@@ -269,3 +269,31 @@ main.container,
 }
 .search-btn:hover { opacity: .9; }
 
+/* Treat touch devices like mobile even if "desktop site" is requested */
+@media (hover: none) and (pointer: coarse) {
+  /* Stack cards instead of 2-column grid */
+  .post-card { 
+    grid-template-columns: 1fr !important; 
+  }
+
+  /* Comfortable reading width and padding */
+  .container,
+  .site-header .container,
+  main.container,
+  .site-footer .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .post { 
+    max-width: 92vw !important; 
+  }
+
+  /* “More posts” and related → 1 column on phones */
+  .more-grid,
+  .related-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Make the list thumbnail height a bit smaller on phones */
+  .thumb { height: 160px; }
+}
