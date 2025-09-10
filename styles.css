@@ -263,8 +263,9 @@ main.container,
   width: 18px;
   height: 18px;
   display: block;
-  stroke: currentColor;
+  stroke: #000;
   stroke-width: 2;
   fill: none;
 }
 .search-btn:hover { opacity: .9; }
+
