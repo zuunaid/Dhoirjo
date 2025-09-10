@@ -297,12 +297,3 @@ main.container,
   /* Make the list thumbnail height a bit smaller on phones */
   .thumb { height: 160px; }
 }
-
-/* Force SolaimanLipi font on search input + placeholder */
-.search-input,
-.search-input::placeholder {
-  font-family: var(--font-bn); /* SolaimanLipi already assigned in your root */
-  font-weight: 700;            /* match body text */
-  color: var(--muted);         /* keep it subtle */
-  opacity: 1;                  /* some browsers lower opacity by default */
-}
