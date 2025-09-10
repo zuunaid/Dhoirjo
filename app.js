@@ -499,6 +499,13 @@ async function initPost(){
 
 /* Convert digits → Bengali except Arabic blocks */
 function convertDigitsExceptArabic(root){
+  /* Convert digits only in visible text nodes (do not touch attributes/URLs) */
+function convertDigitsInTextNodes(root){
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n => n.nodeValue = toBnDigits(n.nodeValue));
+}
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
     acceptNode(node){
       if (node.parentElement && (node.parentElement.classList.contains('ar-inline') || node.parentElement.classList.contains('ar-separate'))){
@@ -568,3 +575,4 @@ async function renderMoreSection(currentSlug){
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
