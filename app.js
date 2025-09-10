@@ -512,7 +512,39 @@ async function initPost(){
       `<a target="_blank" rel="noopener" href="https://t.me/share/url?url=${encodeURIComponent(url)}&text=${text}">Telegram</a>`
     ].join(' · ');
     share.hidden = false;
+// === Related posts ===
+try {
+  const allNames = await listPosts();
+  const posts = [];
+  for (const name of allNames){
+    const md = await fetchPostByName(name);
+    const { fm, body } = parseFrontMatter(md);
+    const slug2 = nameToSlug(name);
+    posts.push({
+      slug: slug2,
+      title: fm.title || slug2,
+      excerpt: fm.excerpt || makeExcerpt(body, 20),
+      thumb: fm.thumbnail || ''
+    });
+  }
+  // pick 3 other random posts, not the current one
+  const others = posts.filter(p => p.slug !== slug).sort(()=>0.5 - Math.random()).slice(0,3);
 
+  if (others.length){
+    const section = $('#relatedPosts');
+    const grid = section.querySelector('.related-grid');
+    grid.innerHTML = others.map(p => `
+      <a class="related-card" href="post.html?slug=${encodeURIComponent(p.slug)}">
+        ${p.thumb ? `<div class="thumb"><img src="${resolveAsset(p.thumb)}" alt=""></div>` : `<div class="thumb" style="display:none"></div>`}
+        <div class="info">
+          <h3 class="title">${p.title}</h3>
+          <p class="excerpt">${p.excerpt}</p>
+        </div>
+      </a>
+    `).join('');
+    section.hidden = false;
+  }
+}catch(e){ console.error('Related posts failed', e); }
   }catch(err){
     $('#postTitle').textContent = 'পোস্ট লোড ব্যর্থ';
     console.error(err);
@@ -536,3 +568,4 @@ function convertDigitsExceptArabic(root){
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
