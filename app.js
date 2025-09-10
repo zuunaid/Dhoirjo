@@ -1,7 +1,7 @@
 /* ====== CONFIG ====== */
 const SITE = {
   user: 'zuunaid',     // your GitHub username
-  repo: 'dhoirjo',     // your repository name
+  repo: 'Dhoirjo',     // your repository name
   branch: 'main',
   postsPerPage: 10
 };
@@ -536,4 +536,5 @@ function convertDigitsExceptArabic(root){
 }
 
 /* Expose */
+
 window.Blog = { initHome, initPost };
