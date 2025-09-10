@@ -257,3 +257,14 @@ main.container,
   font-size: clamp(16px, 0.9vw + 12px, 20px);
   line-height: 1.85;
 }
+
+/* Minimal search icon (inherits theme color via currentColor) */
+.search-btn svg{
+  width: 18px;
+  height: 18px;
+  display: block;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+.search-btn:hover { opacity: .9; }
