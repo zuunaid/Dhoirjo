@@ -598,9 +598,11 @@ async function renderMoreSection(currentSlug){
 
     grid.innerHTML = pick.map(p => `
       <article class="more-card">
-        <a class="more-thumb" href="post.html?slug=${encodeURIComponent(p.slug)}">
-          ${p.thumb ? `<img src="${resolveAsset(p.thumb)}" alt="">` : ``}
-        </a>
+        ${p.thumb ? `
+  <a class="more-thumb" href="post.html?slug=${encodeURIComponent(p.slug)}">
+    <img src="${resolveAsset(p.thumb)}" alt="">
+  </a>
+` : ``}
         <h3 class="more-title">
           <a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a>
         </h3>
@@ -618,6 +620,7 @@ async function renderMoreSection(currentSlug){
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
 
 
 
