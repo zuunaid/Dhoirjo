@@ -14,45 +14,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
-  <meta name="color-scheme" content="light dark">
+  <meta name="color-scheme" content="light">
 </head>
 <body>
   <header class="site-header">
-  <div class="container">
-    <a class="brand" href="index.html" aria-label="ржзрзИрж░рзНржп тАФ Home">ধৈর্য</a>
+    <div class="container">
+      <a class="brand" href="index.html" aria-label="ধৈর্য — Home">ধৈর্য</a>
 
-    <nav class="nav">
-
-      <!-- Search -->
-      <div class="search-wrap">
-        <button id="searchOpen" class="icon-btn" aria-label="Search">🔍</button>
-        <input id="searchInput" class="search-input" type="search" placeholder="Search" autocomplete="off">
-      </div>
-
-      <!-- Hamburger -->
-      <div class="menu">
-        <button id="menuBtn" class="icon-btn hamburger" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-       stroke-linecap="round" stroke-linejoin="round">
-    <line x1="3" y1="6" x2="21" y2="6"/>
-    <line x1="3" y1="12" x2="21" y2="12"/>
-    <line x1="3" y1="18" x2="21" y2="18"/>
-  </svg>
-</button>
-        <div id="menuPanel" class="menu-panel" role="menu">
-          <a role="menuitem" href="index.html">Home</a>
-          <a role="menuitem" href="index.html?view=categories">Category</a>
-          <a role="menuitem" href="index.html?view=tags">Tags</a>
-          <!-- Add more items here laterтАж -->
+      <nav class="nav">
+        <!-- Search removed (post page doesn’t need it) -->
+        <div class="menu">
+          <button id="menuBtn" class="icon-btn hamburger" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <div id="menuPanel" class="menu-panel" role="menu">
+            <a role="menuitem" href="index.html">হোম</a>
+            <a role="menuitem" href="index.html?view=categories">ক্যাটাগরি</a>
+            <a role="menuitem" href="index.html?view=tags">ট্যাগ</a>
+          </div>
         </div>
-      </div>
-    </nav>
-  </div>
-</header>
+      </nav>
+    </div>
+  </header>
 
   <main class="container">
     <article id="post" class="post" aria-live="polite">
-      <h1 id="postTitle" class="post-title">рж▓рзЛржб рж╣ржЪрзНржЫрзЗтАж</h1>
+      <h1 id="postTitle" class="post-title">পোস্ট</h1>
       <div id="postMeta" class="post-meta"></div>
       <figure id="postCover" class="post-cover" hidden>
         <img id="postCoverImg" alt="">
@@ -62,6 +54,12 @@
       <div class="share-row" id="shareRow" hidden></div>
       <div class="post-tags" id="postTags" hidden></div>
     </article>
+
+    <!-- Related posts -->
+    <section id="relatedPosts" class="related-posts" hidden>
+      <h2 class="related-title">আরও পড়ুন</h2>
+      <div class="related-grid"></div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -78,6 +76,3 @@
   </script>
 </body>
 </html>
-
-
-
