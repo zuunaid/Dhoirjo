@@ -390,7 +390,7 @@ async function initHome(){
           });
         }
       }
-      listing.innerHTML = listing.innerHTML.replace(/\d/g, d=>BN_DIGITS[d]);
+      convertDigitsInTextNodes(listing);
     }
 
     function drawPagination(arr){
@@ -575,4 +575,5 @@ async function renderMoreSection(currentSlug){
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
 
