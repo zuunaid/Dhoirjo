@@ -474,6 +474,7 @@ async function initPost(){
     $('#postTitle').textContent = 'পোস্ট পাওয়া যায়নি';
     return;
   }
+  await renderMoreSection(slug);
   try{
     const mdName = slug === 'sample' && LOCAL ? '__inline-sample__' : slugToName(slug);
     const md = await fetchPostByName(mdName);
@@ -567,8 +568,56 @@ function convertDigitsExceptArabic(root){
   while(walker.nextNode()) nodes.push(walker.currentNode);
   nodes.forEach(n => n.nodeValue = toBnDigits(n.nodeValue));
 }
+async function renderMoreSection(currentSlug){
+  try{
+    const names = await listPosts();
+    const posts = [];
+
+    for (const name of names){
+      const slug = nameToSlug(name);
+      if (slug === currentSlug) continue; // skip current
+
+      const md = await fetchPostByName(name);
+      const { fm, body } = parseFrontMatter(md);
+      posts.push({
+        slug,
+        title: fm.title || slug,
+        date: fm.date || '1970-01-01',
+        thumb: fm.thumbnail || '',
+        excerpt: fm.excerpt || makeExcerpt(body, 26)
+      });
+    }
+
+    // Newest first
+    posts.sort((a,b)=> new Date(b.date) - new Date(a.date));
+
+    // Pick top 4
+    const pick = posts.slice(0, 4);
+    const grid = document.getElementById('moreGrid');
+    if (!grid) return;
+
+    grid.innerHTML = pick.map(p => `
+      <article class="more-card">
+        <a class="more-thumb" href="post.html?slug=${encodeURIComponent(p.slug)}">
+          ${p.thumb ? `<img src="${resolveAsset(p.thumb)}" alt="">` : ``}
+        </a>
+        <h3 class="more-title">
+          <a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a>
+        </h3>
+        <p class="more-excerpt">${p.excerpt}</p>
+      </article>
+    `).join('');
+
+    // Bengali digits
+    grid.innerHTML = grid.innerHTML.replace(/\d/g, d => BN_DIGITS[d]);
+
+  }catch(e){
+    console.error('More section failed:', e);
+  }
+}
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
 
 
