@@ -516,20 +516,58 @@ async function initPost(){
     ].join(' · ');
     share.hidden = false;
 // === Related posts ===
-try {
-  const allNames = await listPosts();
-  const posts = [];
-  for (const name of allNames){
-    const md = await fetchPostByName(name);
-    const { fm, body } = parseFrontMatter(md);
-    const slug2 = nameToSlug(name);
-    posts.push({
-      slug: slug2,
-      title: fm.title || slug2,
-      excerpt: fm.excerpt || makeExcerpt(body, 20),
-      thumb: fm.thumbnail || ''
-    });
+async function renderMoreSection(currentSlug){
+  try{
+    const names = await listPosts();
+    const posts = [];
+
+    for (const name of names){
+      const slug = nameToSlug(name);
+      if (slug === currentSlug) continue; // skip current post
+
+      const md = await fetchPostByName(name);
+      const { fm, body } = parseFrontMatter(md);
+      posts.push({
+        slug,
+        title: fm.title || slug,
+        date: fm.date || '1970-01-01',
+        thumb: (fm.thumbnail || '').trim(),
+        excerpt: fm.excerpt || makeExcerpt(body, 26)
+      });
+    }
+
+    // newest first, then pick 4
+    posts.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    const pick = posts.slice(0, 4);
+
+    const grid = document.getElementById('moreGrid');
+    if (!grid) return;
+
+    grid.innerHTML = pick.map(p => {
+      const hasThumb = !!p.thumb;
+      return `
+        <article class="more-card${hasThumb ? '' : ' no-thumb'}">
+          ${hasThumb ? `
+            <a class="more-thumb" href="post.html?slug=${encodeURIComponent(p.slug)}">
+              <img src="${resolveAsset(p.thumb)}" alt=""
+                   onerror="this.closest('.more-thumb').remove(); this.remove();">
+            </a>
+          ` : ``}
+          <h3 class="more-title">
+            <a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a>
+          </h3>
+          <p class="more-excerpt">${p.excerpt}</p>
+        </article>
+      `;
+    }).join('');
+
+    // convert digits → Bengali
+    grid.innerHTML = grid.innerHTML.replace(/\d/g, d => BN_DIGITS[d]);
+
+  }catch(e){
+    console.error('More section failed:', e);
   }
+}
   // pick 3 other random posts, not the current one
   const others = posts.filter(p => p.slug !== slug).sort(()=>0.5 - Math.random()).slice(0,3);
 
@@ -620,6 +658,7 @@ async function renderMoreSection(currentSlug){
 
 /* Expose */
 window.Blog = { initHome, initPost };
+
 
 
 
