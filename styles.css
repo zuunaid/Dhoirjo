@@ -212,7 +212,22 @@ a:hover{ text-decoration: underline; }
   padding: 2px 8px; border-radius: 999px;
   text-decoration: none; color: var(--ink);
 }
-
+/* Read more button: black outline, rounded, black text */
+.btn-outline-black{
+  display: inline-block;
+  border: 1.5px solid #000;
+  color: #000;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  line-height: 1;
+  margin: 6px 0 10px;
+}
+.btn-outline-black:hover{
+  text-decoration: none;
+  background: rgba(0,0,0,0.04);
+}
 /* Pagination */
 .pagination{ display: flex; gap: 8px; justify-content: center; padding-bottom: var(--space-6); }
 .pagination a, .pagination span{
