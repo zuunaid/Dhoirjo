@@ -306,7 +306,6 @@ function initMenu(){
 
 /* ====== HOME ====== */
 async function initHome(){
-  initTheme();
   initSearchUI();
   initMenu();
 
@@ -400,12 +399,13 @@ async function initHome(){
           </div>`;
 
         card.innerHTML = `
-          ${thumb}
-          <div class="content">
-            <h2 class="title"><a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a></h2>
-            <p class="excerpt">${p.excerpt}</p>
-            ${meta}
-          </div>`;
+  ${thumb}
+  <div class="content">
+    <h2 class="title"><a href="post.html?slug=${encodeURIComponent(p.slug)}">${p.title}</a></h2>
+    <p class="excerpt">${p.excerpt}</p>
+    <a class="btn-outline-black" href="post.html?slug=${encodeURIComponent(p.slug)}">আরো পড়ুন</a>
+    ${meta}
+  </div>`;
         listing.appendChild(card);
         const img = card.querySelector('.thumb img');
 if (img) {
@@ -460,7 +460,6 @@ function renderTagCloud(posts, el){
 
 /* ====== POST ====== */
 async function initPost(){
-  initTheme();
   initMenu();
 
   document.addEventListener('scroll', ()=>{
@@ -536,5 +535,4 @@ function convertDigitsExceptArabic(root){
 }
 
 /* Expose */
-
 window.Blog = { initHome, initPost };
