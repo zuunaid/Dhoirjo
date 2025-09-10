@@ -188,7 +188,7 @@ main.container,
 
 /* ---------- Post page ---------- */
 .post{ padding-block: var(--space-5); max-width: min(100%, var(--read-max)); margin-inline: auto; }
-.post-title{ font-size: clamp(28px, 4vw, 34px); line-height: 1.25; margin: 0 0 var(--space-2) 0; }
+.post-title{ font-size: clamp(28px, 4vw, 34px); line-height: 1.5; margin: 0 0 var(--space-2) 0; }
 .post-meta{ color: var(--muted); margin-bottom: var(--space-4); }
 .post-cover{ margin: 0 0 var(--space-4) 0; }
 .post-cover img{ width: 100%; height: auto; border-radius: var(--radius); }
@@ -297,3 +297,4 @@ main.container,
   /* Make the list thumbnail height a bit smaller on phones */
   .thumb { height: 160px; }
 }
+
