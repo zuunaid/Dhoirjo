@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ধৈর্য — পোস্ট</title>
+
+  <!-- Bengali font -->
+  <link rel="preconnect" href="https://fonts.maateen.me" crossorigin>
+  <style>@import url('https://fonts.maateen.me/solaiman-lipi/font.css');</style>
+
+  <!-- Arabic with Tashkeel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <meta name="color-scheme" content="light dark">
+</head>
+<body>
+  <header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="ধৈর্য — Home">ধৈর্য</a>
+
+    <nav class="nav">
+      <!-- Theme -->
+      <button id="themeToggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">🌓</button>
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <button id="searchOpen" class="icon-btn" aria-label="Search">🔍</button>
+        <input id="searchInput" class="search-input" type="search" placeholder="খুঁজুন…" autocomplete="off">
+      </div>
+
+      <!-- Hamburger -->
+      <div class="menu">
+        <button id="menuBtn" class="icon-btn hamburger" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <line x1="3" y1="12" x2="21" y2="12"/>
+    <line x1="3" y1="18" x2="21" y2="18"/>
+  </svg>
+</button>
+        <div id="menuPanel" class="menu-panel" role="menu">
+          <a role="menuitem" href="index.html">হোম</a>
+          <a role="menuitem" href="index.html?view=categories">ক্যাটাগরি</a>
+          <a role="menuitem" href="index.html?view=tags">ট্যাগ</a>
+          <!-- Add more items here later… -->
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+  <main class="container">
+    <article id="post" class="post" aria-live="polite">
+      <h1 id="postTitle" class="post-title">লোড হচ্ছে…</h1>
+      <div id="postMeta" class="post-meta"></div>
+      <figure id="postCover" class="post-cover" hidden>
+        <img id="postCoverImg" alt="">
+      </figure>
+      <div id="postBody" class="post-body"></div>
+
+      <div class="share-row" id="shareRow" hidden></div>
+      <div class="post-tags" id="postTags" hidden></div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 ধৈর্য,</small>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.Blog.initPost();
+    });
+  </script>
+</body>
+</html>
