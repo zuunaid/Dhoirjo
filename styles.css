@@ -360,4 +360,59 @@ a:hover{ text-decoration: underline; }
   .more-grid { grid-template-columns: 1fr; }
 }
 */
+/* === Desktop layout fix (paste at the very end of styles.css) === */
+
+/* Make every container span the available width and center it */
+.container {
+  width: 100%;
+  max-width: 980px;   /* adjust if you want wider/narrower */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+/* Ensure header/main/footer containers all follow the same max-width */
+.site-header .container,
+main.container,
+.site-footer .container {
+  width: 100%;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Don’t let any parent flex or grid squeeze the container */
+body {
+  margin: 0;
+}
+html, body {
+  min-width: 320px;
+}
+
+/* Images should never overflow or force columns narrow */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* On larger screens, give cards room to breathe */
+@media (min-width: 1024px) {
+  .post-card {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* thumbnail | content */
+    gap: 20px;
+  }
+  .post-card .thumb {
+    width: 100%;
+  }
+}
+
+/* If any rule somewhere set a fixed small width on .container, kill it */
+.container[style], .container {
+  max-width: 980px !important;
+  width: 100% !important;
+}
 
