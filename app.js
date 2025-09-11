@@ -12,62 +12,33 @@ const LOCAL =
   location.hostname === '127.0.0.1' ||
   location.protocol === 'file:';
 
-/* ====== CONFIG ====== */
-const SITE = {
-  user: 'zuunaid',
-  repo: 'Dhoirjo',
-  branch: 'main',
-  postsPerPage: 10
-};
-
-/* ====== LOCAL TEST SWITCH ====== */
-const LOCAL = location.hostname === 'localhost' ||
-              location.hostname === '127.0.0.1' ||
-              location.protocol === 'file:';
-
-/* ====== AUTO THEME BY IST (run early) ====== */
-// Indian Standard Time offset = UTC+5:30 = +330 minutes
-const IST_OFFSET_MIN = 330;
-
-function getISTDate() {
-  const now = new Date();
-  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-  return new Date(utcMs + IST_OFFSET_MIN * 60000);
+/* ========= AUTO THEME BY IST (run early) ========= */
+// Use Asia/Kolkata so it’s correct regardless of the viewer’s device timezone
+function getISTHour(){
+  // returns 0..23 hour in Asia/Kolkata
+  const hh = new Date().toLocaleString('en-US', {
+    timeZone: 'Asia/Kolkata',
+    hour12: false,
+    hour: '2-digit'
+  });
+  return parseInt(hh, 10);
 }
-
-// Light from 06:00–18:59 IST, Dark from 19:00–05:59 IST
-function themeForIST(d) {
-  const h = d.getHours();
-  return (h >= 6 && h < 19) ? 'light' : 'dark';
-}
-
-function applyTheme(theme) {
+function applyTheme(theme){
   const root = document.documentElement;
   root.setAttribute('data-theme', theme);
   root.style.colorScheme = theme;
 }
-
-// Pick at load
-(function initAutoThemeIST() {
+function decideThemeByIST(){
+  const h = getISTHour();
+  // Light = 06:00–18:59 IST, Dark = 19:00–05:59 IST
+  return (h >= 6 && h < 19) ? 'light' : 'dark';
+}
+(function initAutoThemeIST(){
   try { localStorage.removeItem('theme'); } catch(e){}
-  applyTheme(themeForIST(getISTDate()));
-
-  const now = getISTDate();
-  const h = now.getHours();
-  const nextHour = (h < 6) ? 6 : (h < 19 ? 19 : 30);
-  const nextBoundary = new Date(now);
-  nextBoundary.setHours(nextHour % 24, 0, 0, 0);
-  if (nextHour === 30) nextBoundary.setDate(nextBoundary.getDate() + 1);
-
-  const msUntil = nextBoundary - now;
-  setTimeout(() => {
-    applyTheme(themeForIST(getISTDate()));
-    setInterval(() => applyTheme(themeForIST(getISTDate())), 60 * 60 * 1000);
-  }, Math.max(1000, msUntil));
+  applyTheme(decideThemeByIST());
+  // Recheck every 5 minutes in case hour boundary passes while open
+  setInterval(()=> applyTheme(decideThemeByIST()), 5*60*1000);
 })();
-
-/* ====== UTILS ====== */
-const $ = (sel, el=document) => el.querySelector(sel);
 
 /* ========= UTILS ========= */
 const $  = (sel, el=document) => el.querySelector(sel);
@@ -77,7 +48,6 @@ function basePath(){
   const p = location.pathname;
   return p.endsWith('/') ? p : p.replace(/\/[^\/]*$/, '/');
 }
-
 function resolveAsset(src){
   if (!src) return '';
   if (/^https?:\/\//i.test(src)) return src;     // external
@@ -192,33 +162,6 @@ function enhanceArabic(container){
         '<span class="ar-inline">$1</span>');
     }
   });
-}
-
-/* ====== Auto Theme by IST (India) ====== */
-function getISTHour(){
-  // returns 0..23 hour in Asia/Kolkata
-  const hh = new Date().toLocaleString('en-US', {
-    timeZone: 'Asia/Kolkata',
-    hour12: false,
-    hour: '2-digit'
-  });
-  return parseInt(hh, 10);
-}
-function applyTheme(theme){
-  document.documentElement.setAttribute('data-theme', theme);
-}
-function decideThemeByIST(){
-  const h = getISTHour();
-  // Day = 06:00–17:59 IST (tweak if you prefer)
-  return (h >= 6 && h < 18) ? 'light' : 'dark';
-}
-function initAutoThemeIST(){
-  // Set immediately
-  applyTheme(decideThemeByIST());
-  // Re-evaluate every 5 minutes
-  setInterval(() => {
-    applyTheme(decideThemeByIST());
-  }, 5 * 60 * 1000);
 }
 
 /* Downscale images client-side */
@@ -377,7 +320,6 @@ function initMenu(){
 async function initHome(){
   initSearchUI();
   initMenu();
-  initAutoThemeIST();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -527,19 +469,18 @@ function renderCategoryCloud(posts, el){
     const key = cleanTax(p.category);
     cats.set(key, (cats.get(key)||0)+1);
   });
-  el.innerHTML = `<h2>ক্যাটাগরি</h2>` +
+  el.innerHTML = `<h2>Category</h2>` +
     Array.from(cats.entries()).sort()
     .map(([c,n]) => `<a href="index.html?c=${encodeURIComponent(c)}">${c} (${toBnDigits(n)})</a>`)
     .join(' ');
 }
-
 function renderTagCloud(posts, el){
   const tags = new Map();
   posts.forEach(p=> (p.tags||[]).forEach(t=>{
     const key = cleanTax(t);
     tags.set(key,(tags.get(key)||0)+1);
   }));
-  el.innerHTML = `<h2>ট্যাগ</h2>` +
+  el.innerHTML = `<h2>Tags</h2>` +
     Array.from(tags.entries()).sort()
     .map(([t,n]) => `<a href="index.html?t=${encodeURIComponent(t)}">#${t} (${toBnDigits(n)})</a>`)
     .join(' ');
@@ -548,7 +489,6 @@ function renderTagCloud(posts, el){
 /* ========= POST ========= */
 async function initPost(){
   initMenu();
-  initAutoThemeIST();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -601,7 +541,7 @@ async function initPost(){
     ].join(' · ');
     share.hidden = false;
 
-    // “আরও পড়ুন” grid (2x2) under single post
+    // “আরও পড়ুন” grid (2×2) under single post
     await renderMoreSection(slug);
 
   }catch(err){
@@ -661,6 +601,3 @@ async function renderMoreSection(currentSlug){
 
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
-
-
-
