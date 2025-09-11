@@ -137,6 +137,33 @@ function enhanceArabic(container){
   });
 }
 
+/* ====== Auto Theme by IST (India) ====== */
+function getISTHour(){
+  // returns 0..23 hour in Asia/Kolkata
+  const hh = new Date().toLocaleString('en-US', {
+    timeZone: 'Asia/Kolkata',
+    hour12: false,
+    hour: '2-digit'
+  });
+  return parseInt(hh, 10);
+}
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+}
+function decideThemeByIST(){
+  const h = getISTHour();
+  // Day = 06:00–17:59 IST (tweak if you prefer)
+  return (h >= 6 && h < 18) ? 'light' : 'dark';
+}
+function initAutoThemeIST(){
+  // Set immediately
+  applyTheme(decideThemeByIST());
+  // Re-evaluate every 5 minutes
+  setInterval(() => {
+    applyTheme(decideThemeByIST());
+  }, 5 * 60 * 1000);
+}
+
 /* Downscale images client-side */
 async function downscaleImages(container, maxW=1600, quality=0.82){
   const imgs = $$('img', container);
@@ -575,3 +602,4 @@ async function renderMoreSection(currentSlug){
 
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
