@@ -84,8 +84,15 @@
       window.Blog.initHome();
     });
   </script>
+  <script src="app.js" defer></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    try { Blog.initHome(); } catch (e) { console.error(e); }
+  });
+</script>
 </body>
 </html>
+
 
 
 
