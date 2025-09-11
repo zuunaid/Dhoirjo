@@ -12,6 +12,63 @@ const LOCAL =
   location.hostname === '127.0.0.1' ||
   location.protocol === 'file:';
 
+/* ====== CONFIG ====== */
+const SITE = {
+  user: 'zuunaid',
+  repo: 'Dhoirjo',
+  branch: 'main',
+  postsPerPage: 10
+};
+
+/* ====== LOCAL TEST SWITCH ====== */
+const LOCAL = location.hostname === 'localhost' ||
+              location.hostname === '127.0.0.1' ||
+              location.protocol === 'file:';
+
+/* ====== AUTO THEME BY IST (run early) ====== */
+// Indian Standard Time offset = UTC+5:30 = +330 minutes
+const IST_OFFSET_MIN = 330;
+
+function getISTDate() {
+  const now = new Date();
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utcMs + IST_OFFSET_MIN * 60000);
+}
+
+// Light from 06:00–18:59 IST, Dark from 19:00–05:59 IST
+function themeForIST(d) {
+  const h = d.getHours();
+  return (h >= 6 && h < 19) ? 'light' : 'dark';
+}
+
+function applyTheme(theme) {
+  const root = document.documentElement;
+  root.setAttribute('data-theme', theme);
+  root.style.colorScheme = theme;
+}
+
+// Pick at load
+(function initAutoThemeIST() {
+  try { localStorage.removeItem('theme'); } catch(e){}
+  applyTheme(themeForIST(getISTDate()));
+
+  const now = getISTDate();
+  const h = now.getHours();
+  const nextHour = (h < 6) ? 6 : (h < 19 ? 19 : 30);
+  const nextBoundary = new Date(now);
+  nextBoundary.setHours(nextHour % 24, 0, 0, 0);
+  if (nextHour === 30) nextBoundary.setDate(nextBoundary.getDate() + 1);
+
+  const msUntil = nextBoundary - now;
+  setTimeout(() => {
+    applyTheme(themeForIST(getISTDate()));
+    setInterval(() => applyTheme(themeForIST(getISTDate())), 60 * 60 * 1000);
+  }, Math.max(1000, msUntil));
+})();
+
+/* ====== UTILS ====== */
+const $ = (sel, el=document) => el.querySelector(sel);
+
 /* ========= UTILS ========= */
 const $  = (sel, el=document) => el.querySelector(sel);
 const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
@@ -604,5 +661,6 @@ async function renderMoreSection(currentSlug){
 
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
 
 
