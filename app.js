@@ -454,7 +454,7 @@ excerpt: "এটি লোকাল মোডের জন্য একটি �
       const key = cleanTax(p.category);
       cats.set(key, (cats.get(key)||0)+1);
     });
-    el.innerHTML = `<h2>ক্যাটাগরি</h2>` +
+    el.innerHTML = `<h2>category</h2>` +
       Array.from(cats.entries()).sort()
       .map(([c,n]) => `<a href="index.html?c=${encodeURIComponent(c)}">${c} (${toBnDigits(n)})</a>`)
       .join(' ');
@@ -465,7 +465,7 @@ excerpt: "এটি লোকাল মোডের জন্য একটি �
       const key = cleanTax(t);
       tags.set(key,(tags.get(key)||0)+1);
     }));
-    el.innerHTML = `<h2>ট্যাগ</h2>` +
+    el.innerHTML = `<h2>Tags</h2>` +
       Array.from(tags.entries()).sort()
       .map(([t,n]) => `<a href="index.html?t=${encodeURIComponent(t)}">#${t} (${toBnDigits(n)})</a>`)
       .join(' ');
@@ -588,3 +588,4 @@ excerpt: "এটি লোকাল মোডের জন্য একটি �
   window.Blog = { initHome, initPost };
 
 })();
+
