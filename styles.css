@@ -19,6 +19,7 @@
   --line: #e5e7eb;
   --accent: #1e4fbf;
 
+   
   /* radii & fonts */
   --radius: 10px;
   --font-bn: 'SolaimanLipi', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
@@ -368,3 +369,4 @@ main.container,
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 24px);
 }
+
