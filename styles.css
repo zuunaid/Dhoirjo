@@ -6,7 +6,7 @@
 @font-face{
   font-family: "ArabicCustom";
   src: url("/fonts/arabic.ttf") format("truetype");
-  font-weight: 600;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -36,17 +36,6 @@
   --space-4: 24px;
   --space-5: 32px;
   --space-6: 48px;
-}
-
-/* (Optional) system dark fallback — harmless if you stay light */
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg: #0e1012;
-    --ink: #f3f4f6;
-    --muted: #9aa3af;
-    --line: #262a30;
-    --accent: #4f7cff;
-  }
 }
 
 /* Base */
@@ -285,4 +274,23 @@ main.container,
   .post { max-width: 92vw !important; }
   .more-grid, .related-grid { grid-template-columns: 1fr !important; }
   .thumb { height: 160px; }
+}
+
+/* Arabic font sizing */
+.ar-inline {
+  font-family: var(--font-ar);
+  font-weight: 400;
+  font-size: 1.1em;   /* adjust as you like */
+  line-height: 1.8;   /* matches body readability */
+}
+
+.ar-separate {
+  font-family: var(--font-ar);
+  font-weight: 400;
+  font-size: 2em;   /* block Arabic slightly bigger */
+  line-height: 2;     /* extra breathing room */
+  text-align: right;
+  direction: rtl;
+  display: block;
+  margin: 1em 0;
 }
