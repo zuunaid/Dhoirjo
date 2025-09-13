@@ -575,3 +575,25 @@ async function renderMoreSection(currentSlug){
 
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
+function initScrollTopBtn(){
+  const btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+
+  // Show button when scrolled down 200px
+  window.addEventListener('scroll', () => {
+    if (document.documentElement.scrollTop > 200 || document.body.scrollTop > 200) {
+      btn.style.display = 'block';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+
+  // Scroll to top smoothly
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// Run on every page
+document.addEventListener('DOMContentLoaded', initScrollTopBtn);
