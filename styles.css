@@ -370,3 +370,33 @@ main.container,
   padding-inline: clamp(12px, 3vw, 24px);
 }
 
+/* Scroll-to-top button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5); /* half-transparent black */
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;  /* hidden by default */
+  z-index: 1000;
+  transition: opacity 0.3s ease, background 0.2s ease;
+}
+
+#scrollTopBtn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* In dark mode, make it lighter */
+:root[data-theme="dark"] #scrollTopBtn {
+  background: rgba(255, 255, 255, 0.5);
+  color: #000;
+}
+:root[data-theme="dark"] #scrollTopBtn:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
