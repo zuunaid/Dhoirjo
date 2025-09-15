@@ -293,6 +293,7 @@ function initMenu(){
 async function initHome(){
   initSearchUI();
   initMenu();
+  initScrollTop();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -463,6 +464,7 @@ function renderTagCloud(posts, el){
 /* ========= POST ========= */
 async function initPost(){
   initMenu();
+  initScrollTop();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -572,8 +574,20 @@ async function renderMoreSection(currentSlug){
     console.error('More section failed:', e);
   }
 }
-
+/* === Scroll-to-top helper === */
+function initScrollTop(){
+  const btn = document.getElementById('toTop');
+  if(!btn) return;
+  btn.addEventListener('click', () => {
+    try{
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }catch{
+      window.scrollTo(0, 0); // fallback
+    }
+  });
+}
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
 
 
