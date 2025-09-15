@@ -363,7 +363,7 @@ main.container,
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: color-mix(in oklab, var(--ink) 12%, transparent); /* half-transparent look */
+  background: color-mix(in oklab, var(--ink) 12%, transparent);
   backdrop-filter: saturate(120%) blur(6px);
   box-shadow: 0 6px 18px rgba(0,0,0,.12);
   color: var(--bg);
@@ -374,15 +374,6 @@ main.container,
 }
 .to-top svg{ width: 18px; height: 18px; display: block; }
 .to-top:active{ transform: translateY(1px); }
-
-/* Show only after user scrolls a bit (body.scrolled comes from app.js) */
 .scrolled .to-top{ opacity: 1; pointer-events: auto; }
-
-/* Better accessibility */
-.to-top:focus-visible{
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-@media (prefers-reduced-motion: reduce){
-  .to-top{ transition: none; }
-}
+.to-top:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce){ .to-top{ transition: none; } }
