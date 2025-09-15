@@ -293,7 +293,6 @@ function initMenu(){
 async function initHome(){
   initSearchUI();
   initMenu();
-  initScrollTopBtn();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -464,7 +463,6 @@ function renderTagCloud(posts, el){
 /* ========= POST ========= */
 async function initPost(){
   initMenu();
-  initScrollTopBtn();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -577,4 +575,5 @@ async function renderMoreSection(currentSlug){
 
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
 
