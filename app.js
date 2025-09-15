@@ -580,20 +580,15 @@ function initScrollTopBtn(){
   const btn = document.getElementById('scrollTopBtn');
   if (!btn) return;
 
-  // Show button when scrolled down 200px
-  window.addEventListener('scroll', () => {
-    if (document.documentElement.scrollTop > 200 || document.body.scrollTop > 200) {
-      btn.style.display = 'block';
-    } else {
-      btn.style.display = 'none';
-    }
-  });
+  const toggle = () => {
+    const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    btn.style.display = (y > 200) ? 'block' : 'none';
+  };
 
-  // Scroll to top smoothly
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle(); // <-- run once so it shows/hides correctly on load/restore
+
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
-
-// Run on every page
-document.addEventListener('DOMContentLoaded', initScrollTopBtn);
