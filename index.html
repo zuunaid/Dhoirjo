@@ -85,7 +85,13 @@
       window.Blog.initHome();
     });
   </script>
+  <!-- put app.js first -->
   <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.Blog.initHome();  <!-- or initPost() on post.html -->
+    });
+  </script>
   <button id="toTop" class="to-top" aria-label="Scroll to top" title="উপরে যান">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -94,6 +100,7 @@
 </button>
 </body>
 </html>
+
 
 
 
