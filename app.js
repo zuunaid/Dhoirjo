@@ -586,7 +586,7 @@ function initScrollTopBtn(){
   };
 
   window.addEventListener('scroll', toggle, { passive: true });
-  toggle(); // <-- run once so it shows/hides correctly on load/restore
+  toggle(); // make initial state correct even before first scroll
 
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
