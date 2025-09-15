@@ -351,29 +351,3 @@ main.container,
   padding-inline: clamp(12px, 3vw, 24px);
 }
 
-/* === Scroll-to-top button === */
-.to-top{
-  position: fixed;
-  right: clamp(12px, 3vw, 24px);
-  bottom: calc(clamp(12px, 3vw, 24px) + env(safe-area-inset-bottom, 0px));
-  z-index: 50;
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--ink) 12%, transparent);
-  backdrop-filter: saturate(120%) blur(6px);
-  box-shadow: 0 6px 18px rgba(0,0,0,.12);
-  color: var(--bg);
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease;
-}
-.to-top svg{ width: 18px; height: 18px; display: block; }
-.to-top:active{ transform: translateY(1px); }
-.scrolled .to-top{ opacity: 1; pointer-events: auto; }
-.to-top:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce){ .to-top{ transition: none; } }
