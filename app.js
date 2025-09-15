@@ -289,6 +289,7 @@ function initMenu(){
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
 }
 
+
 /* ========= HOME ========= */
 async function initHome(){
   initSearchUI();
@@ -574,6 +575,7 @@ async function renderMoreSection(currentSlug){
 }
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
 
 
 
