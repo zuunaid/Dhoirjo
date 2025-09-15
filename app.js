@@ -289,6 +289,18 @@ function initMenu(){
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
 }
 
+/* === Scroll-to-top helper === */
+function initScrollTop(){
+  const btn = document.getElementById('toTop');
+  if(!btn) return;
+  btn.addEventListener('click', () => {
+    try{
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }catch{
+      window.scrollTo(0, 0); // fallback
+    }
+  });
+}
 /* ========= HOME ========= */
 async function initHome(){
   initSearchUI();
@@ -574,20 +586,9 @@ async function renderMoreSection(currentSlug){
     console.error('More section failed:', e);
   }
 }
-/* === Scroll-to-top helper === */
-function initScrollTop(){
-  const btn = document.getElementById('toTop');
-  if(!btn) return;
-  btn.addEventListener('click', () => {
-    try{
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }catch{
-      window.scrollTo(0, 0); // fallback
-    }
-  });
-}
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
 
 
 
