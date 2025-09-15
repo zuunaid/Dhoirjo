@@ -582,16 +582,30 @@ function initScrollTopBtn(){
   const btn = document.getElementById('scrollTopBtn');
   if (!btn) return;
 
+  const threshold = 80; // use smaller value to prove it works; raise to 200 later
   const toggle = () => {
     const y = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    btn.style.display = (y > 200) ? 'block' : 'none';
+    if (y > threshold) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
   };
 
+  // listeners
   window.addEventListener('scroll', toggle, { passive: true });
-  toggle(); // make initial state correct even before first scroll
+  window.addEventListener('hashchange', toggle, { passive: true }); // anchors/TOC jumps
+  document.addEventListener('visibilitychange', toggle, { passive: true }); // bfcache restores
 
+  // click → smooth scroll
   btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
   });
-}
 
+  // run once immediately
+  toggle();
+}
