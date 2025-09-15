@@ -289,66 +289,10 @@ function initMenu(){
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
 }
 
-/* === Scroll-to-top (self-injecting) === */
-function initScrollTop(){
-  // 1) Inject minimal CSS once
-  if (!document.getElementById('toTopStyles')) {
-    const style = document.createElement('style');
-    style.id = 'toTopStyles';
-    style.textContent = `
-      .to-top{
-        position: fixed;
-        right: clamp(12px, 3vw, 24px);
-        bottom: calc(clamp(12px, 3vw, 24px) + env(safe-area-inset-bottom, 0px));
-        z-index: 50;
-        width: 46px; height: 46px;
-        display: grid; place-items: center;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: color-mix(in oklab, var(--ink) 12%, transparent);
-        backdrop-filter: saturate(120%) blur(6px);
-        box-shadow: 0 6px 18px rgba(0,0,0,.12);
-        color: var(--bg);
-        cursor: pointer;
-        opacity: 0; pointer-events: none;
-        transition: opacity .18s ease, transform .18s ease;
-      }
-      .to-top svg{ width: 18px; height: 18px; display:block; }
-      .to-top:active{ transform: translateY(1px); }
-      .scrolled .to-top{ opacity: 1; pointer-events: auto; }
-      .to-top:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
-      @media (prefers-reduced-motion: reduce){ .to-top{ transition:none; } }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // 2) Create the button if it doesn't exist
-  let btn = document.getElementById('toTop');
-  if (!btn) {
-    btn = document.createElement('button');
-    btn.id = 'toTop';
-    btn.className = 'to-top';
-    btn.setAttribute('aria-label', 'Scroll to top');
-    btn.title = 'উপরে যান';
-    btn.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="18 15 12 9 6 15"></polyline>
-      </svg>`;
-    document.body.appendChild(btn);
-  }
-
-  // 3) Click behavior
-  btn.onclick = () => {
-    try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    catch { window.scrollTo(0, 0); }
-  };
-}
 /* ========= HOME ========= */
 async function initHome(){
   initSearchUI();
   initMenu();
-  initScrollTop();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -519,7 +463,6 @@ function renderTagCloud(posts, el){
 /* ========= POST ========= */
 async function initPost(){
   initMenu();
-  initScrollTop();
 
   document.addEventListener('scroll', ()=>{
     if (window.scrollY > 4) document.body.classList.add('scrolled');
@@ -631,6 +574,7 @@ async function renderMoreSection(currentSlug){
 }
 /* ========= Expose ========= */
 window.Blog = { initHome, initPost };
+
 
 
 
