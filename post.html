@@ -83,8 +83,21 @@
       window.Blog.initPost();
     });
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.site-header');
+    const onScroll = () => {
+      const scrolled = window.scrollY > 10;
+      document.body.classList.toggle('scrolled', scrolled);
+      header.classList.toggle('scrolled', scrolled); // works with both selectors
+    };
+    onScroll(); // run once at load
+    window.addEventListener('scroll', onScroll, { passive: true });
+  });
+  </script>
 </body>
 </html>
+
 
 
 
