@@ -92,7 +92,7 @@ main.container,
 .menu{ position: relative; }
 .hamburger{
   min-width: 36px; min-height: 36px; font-size: 18px; line-height: 1;
-  color: var(--accent); background: none; border: 0; display: flex; place-items: center;
+  color: #1C4A4C; background: none; border: 0; display: flex; place-items: center;
 }
 .hamburger svg{ display: block; }
 .menu-panel{
@@ -103,8 +103,8 @@ main.container,
 }
 .menu.open .menu-panel{ display: block; animation: menuIn .14s ease; }
 @keyframes menuIn{ from{opacity:0; transform: translateY(-4px)} to{opacity:1; transform: translateY(0)} }
-.menu-panel a{ display: block; padding: 10px 12px; border-radius: 8px; color: var(--ink); }
-.menu-panel a:hover{ background: color-mix(in oklab, var(--ink) 6%, transparent); }
+.menu-panel a{ display: block; padding: 10px 12px; border-radius: 8px; color: #1C4A4C; }
+.menu-panel a:hover{ background: color-mix(in oklab, #1C4A4C 6%, transparent); }
 
 /* Search */
 .search-wrap{ position: relative; width: 36px; height: 36px; display: grid; place-items: center; z-index: 5; }
@@ -171,7 +171,7 @@ main.container,
 .meta .dot{ opacity: .6; }
 .cat-chip{ 
   /* changed: light blue background, deep blue text, no border */
-  background: #bbc9c9; 
+  background: #d2dbdb; 
   color: #1C4A4C; 
   border: none; 
   padding: 2px 8px; 
@@ -197,8 +197,8 @@ main.container,
 
 /* Pagination */
 .pagination{ display: flex; gap: 8px; justify-content: center; padding-bottom: var(--space-6); }
-.pagination a, .pagination span{ border: 1px solid var(--line); padding: 6px 12px; border-radius: 8px; color: var(--ink); text-decoration: none; }
-.pagination .active{ background: var(--ink); color: var(--bg); }
+.pagination a, .pagination span{ border: 1px solid var(--line); padding: 6px 12px; border-radius: 8px; color: #1C4A4C;  background:#d2dbdb; text-decoration: none; }
+.pagination .active{ background: #1C4A4C; color: var(--bg); }
 
 /* ---------- Taxonomy clouds ---------- */
 .tax-cloud{ padding-block: var(--space-5); display: grid; gap: 12px; grid-auto-rows: min-content; }
@@ -215,7 +215,7 @@ main.container,
   line-height: 1.7;
   margin: 0 0 var(--space-2) 0;
   /* changed: page/post title in blue */
-  color: var(--ink);
+  color: #143435;
 }
 .post-meta{ color: var(--muted); margin-bottom: var(--space-4); }
 .post-cover{ margin: 0 0 var(--space-4) 0; }
@@ -354,7 +354,7 @@ main.container,
   margin: 2px 0 8px 0;
   font-size: 20px;
   line-height: 1.7;
-  color: var(--accent);
+  color: #143435;
 }
 .post-card .excerpt{
   margin: 0 0 10px 0;
@@ -374,6 +374,7 @@ main.container,
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 24px);
 }
+
 
 
 
