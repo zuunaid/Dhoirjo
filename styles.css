@@ -121,8 +121,8 @@ main.container,
 /* This is the style that gets applied by the JavaScript on scroll */
 .scrolled .site-header {
   background: rgba(255, 255, 255, 0.05) !important; /* Nearly 100% transparent */
-  backdrop-filter: saturate(180%) blur(20px) !important; /* Increased blur for a stronger effect */
-  -webkit-backdrop-filter: saturate(180%) blur(20px) !important; /* Safari support */
+  backdrop-filter: saturate(30%) blur(20px) !important; /* Increased blur for a stronger effect */
+  -webkit-backdrop-filter: saturate(30%) blur(20px) !important; /* Safari support */
   border-color: rgba(229, 231, 235, 0.1) !important; /* Faint border to catch the light */
   box-shadow: var(--shadow-lg) !important; 
 }
@@ -583,5 +583,6 @@ article.post {
     max-width: 85ch; /* A bit wider than the default for desktops */
   }
 }
+
 
 
