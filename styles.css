@@ -158,9 +158,10 @@ main.container,
   margin: 0 0 var(--space-2) 0;
   font-size: 20px;
   line-height: 1.7;
+  color: #143435
 }
 .post-card .title a{
-  color: var(--ink); text-decoration: none;
+  color: #143435; text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%;
   transition: background-size .15s ease;
@@ -171,7 +172,7 @@ main.container,
 .meta .dot{ opacity: .6; }
 .cat-chip{ 
   /* changed: light blue background, deep blue text, no border */
-  background: #d2dbdb; 
+  background: #e8eded; 
   color: #1C4A4C; 
   border: none; 
   padding: 2px 8px; 
@@ -374,6 +375,7 @@ main.container,
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 24px);
 }
+
 
 
 
