@@ -99,7 +99,6 @@ main.container,
 }
 
 /* =========================================================
-/* =========================================================
    Header: Glassy Effect & Spacing (fixed)
    ========================================================= */
 
@@ -109,13 +108,16 @@ main.container,
   z-index: 10;
   margin-inline: clamp(8px, 2vw, 16px);
   border-radius: 14px;
+
+  /* Initial (before scroll) */
   background: var(--surface);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-sm);
+
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Support BOTH: class on <body> OR on the header itself */
+/* Works whether 'scrolled' is on <body> or on the header itself */
 :is(.site-header.scrolled, .scrolled .site-header) {
   background: rgba(255, 255, 255, 0.12) !important;
   backdrop-filter: blur(20px) !important;
@@ -143,6 +145,7 @@ main.container,
   color: var(--accent);
   text-decoration: none;
 }
+
 
 /* Nav links on the right side */
 .nav {
@@ -580,6 +583,7 @@ article.post {
     max-width: 85ch; /* A bit wider than the default for desktops */
   }
 }
+
 
 
 
