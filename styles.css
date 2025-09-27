@@ -13,7 +13,7 @@
 
 :root{
   /* colors */
-  --bg: #ffffff;
+  --bg: #fafaf7; /* slightly off-white main/page background */
   --ink: #131415;
   --muted: #6b7280;
   --line: #e5e7eb;
@@ -169,7 +169,15 @@ main.container,
 .excerpt{ margin: 0 0 var(--space-2) 0; color: var(--ink); opacity: .9; }
 .meta{ display: flex; flex-wrap: wrap; gap: var(--space-2); color: var(--muted); }
 .meta .dot{ opacity: .6; }
-.cat-chip{ border: 1px solid var(--line); padding: 2px 8px; border-radius: 999px; color: var(--ink); text-decoration: none; }
+.cat-chip{ 
+  /* changed: light blue background, deep blue text, no border */
+  background: #eaf2ff; 
+  color: var(--accent); 
+  border: none; 
+  padding: 2px 8px; 
+  border-radius: 999px; 
+  text-decoration: none; 
+}
 
 /* Buttons */
 .btn-outline-black{
@@ -177,6 +185,15 @@ main.container,
   padding: 6px 12px; border-radius: 999px; line-height: 1; margin: 6px 0 10px; text-decoration: none;
 }
 .btn-outline-black:hover{ text-decoration: none; background: rgba(0,0,0,0.04); }
+
+/* Make the "আরো পড়ুন" button inside post cards blue (border + text) */
+.post-card .btn-outline-black{
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.post-card .btn-outline-black:hover{
+  background: rgba(30,79,191,0.06);
+}
 
 /* Pagination */
 .pagination{ display: flex; gap: 8px; justify-content: center; padding-bottom: var(--space-6); }
@@ -197,13 +214,18 @@ main.container,
   font-size: clamp(28px, 4vw, 34px);
   line-height: 1.7;
   margin: 0 0 var(--space-2) 0;
+  /* changed: page/post title in blue */
+  color: var(--accent);
 }
 .post-meta{ color: var(--muted); margin-bottom: var(--space-4); }
 .post-cover{ margin: 0 0 var(--space-4) 0; }
 .post-cover img{ width: 100%; height: auto; border-radius: var(--radius); }
 
 .post-body{ font-size: clamp(16px, 0.9vw + 12px, 20px); line-height: 1.85; }
-.post-body p{ margin: 0 0 var(--space-3) 0; }
+/* changed: only body text (not headings) to blueish gray */
+.post-body p{ margin: 0 0 var(--space-3) 0; color: #5f6b85; }
+.post-body ul li,
+.post-body ol li{ color: #5f6b85; }
 .post-body h2{ font-size: 22px; margin: var(--space-4) 0 var(--space-2); line-height: 1.7; }
 .post-body h3{ font-size: 19px; margin: var(--space-3) 0 var(--space-2); line-height: 1.7; }
 .post-body blockquote{
@@ -306,7 +328,7 @@ main.container,
   display: grid;
   grid-template-columns: minmax(220px, 32vw) 1fr;
   gap: var(--space-3);
-  background: var(--bg);
+  background: #ffffff; /* changed: cards full white against off-white page */
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px;
@@ -350,4 +372,3 @@ main.container,
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 24px);
 }
-
