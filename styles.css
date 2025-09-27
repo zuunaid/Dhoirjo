@@ -321,3 +321,57 @@ main.container,
   .more-grid, .related-grid { grid-template-columns: 1fr !important; }
   .thumb { height: 160px; }
 }
+
+/* ====== PREMIUM TOP BAR (centered title) ====== */
+.site-header{
+  background: linear-gradient(90deg, #0d3d8c, #1553b7);
+  color: #fff;
+  border-bottom: none;
+  box-shadow: var(--shadow-md);
+}
+
+.site-header .container{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 64px;
+}
+
+.brand{
+  justify-self: center;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.nav{
+  justify-self: end;
+  margin-left: 0;
+}
+
+.nav-link{ color: rgba(255,255,255,.92); }
+.nav-link:hover{ color: #fff; opacity: 1; }
+
+.icon-btn{
+  border-color: rgba(255,255,255,.25);
+  color: #fff;
+}
+.icon-btn:hover{ background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.35); }
+
+.hamburger{ color:#fff; }
+.search-btn svg{ stroke:#fff; }
+.menu-panel{ border-color: var(--line); }
+.scrolled .site-header{ box-shadow: var(--shadow-lg); }
+
+/* ====== “আরো পড়ুন” button ====== */
+.post-card .btn-outline-black{
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  font-weight: 700;
+  padding: 7px 14px;
+}
+.post-card .btn-outline-black:hover{
+  background: var(--accent-light);
+  border-color: #0b2f70;
+  text-decoration: none;
+}
