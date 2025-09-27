@@ -409,7 +409,7 @@ main.container,
 }
 
 /* Single Post Page - Mobile First */
-.post {
+article.post {
   padding-block: var(--space-5);
   max-width: 100%; /* Use the container's padding */
   margin-inline: auto;
@@ -566,7 +566,7 @@ main.container,
 /* For Tablets (and larger) */
 @media (min-width: 768px) {
   /* Widen the main text area for better reading on tablets */
-  .post {
+  article.post {
     max-width: var(--read-max); /* Constrains line length to 70 characters */
   }
 
@@ -579,7 +579,7 @@ main.container,
 /* For Desktops (and larger) */
 @media (min-width: 1024px) {
   /* Make the reading width even more comfortable on wide screens */
-  .post {
+  article.post {
     max-width: 85ch; /* A bit wider than the default for desktops */
   }
 }
