@@ -57,7 +57,6 @@ html, body {
 body {
   margin: 0;
   background: var(--bg);
-  background-image: linear-gradient(to bottom, #ffffff, #f8f9fa);
   color: var(--ink-body);
   font-family: var(--font-bn);
   font-weight: 700;
@@ -121,11 +120,11 @@ main.container,
 
 /* This is the style that gets applied by the JavaScript on scroll */
 .scrolled .site-header {
-  background: rgba(255, 255, 255, 0.65); /* Made more transparent to better see through */
-  backdrop-filter: saturate(180%) blur(12px); /* Adjusted blur for a clearer glass effect */
-  -webkit-backdrop-filter: saturate(180%) blur(12px); /* Safari support */
-  border-color: rgba(229, 231, 235, 0.6); /* Adjusted border transparency to match */
-  box-shadow: var(--shadow-lg); /* Deeper shadow when scrolled */
+  background: rgba(255, 255, 255, 0.05); /* Nearly 100% transparent */
+  backdrop-filter: saturate(180%) blur(20px); /* Increased blur for a stronger effect */
+  -webkit-backdrop-filter: saturate(180%) blur(20px); /* Safari support */
+  border-color: rgba(229, 231, 235, 0.1); /* Faint border to catch the light */
+  box-shadow: var(--shadow-lg); 
 }
 
 .site-header .container {
@@ -584,5 +583,4 @@ article.post {
     max-width: 85ch; /* A bit wider than the default for desktops */
   }
 }
-
 
