@@ -15,12 +15,12 @@
   /* Colors */
   --bg: #f8f9fa;
   --surface: #ffffff;
-  --ink: #111827;
-  --ink-body: #374151;
+  --ink: #111827;       /* For headings & titles */
+  --ink-body: #374151;  /* Softer dark gray for body text */
   --muted: #6b7280;
   --line: #e5e7eb;
-  --accent: #0d3d8c;
-  --accent-light: #eef2ff;
+  --accent: #0d3d8c;    /* Deep blue */
+  --accent-light: #eef2ff; /* Very light blue */
 
   /* Sizing & Spacing */
   --radius: 10px;
@@ -41,12 +41,12 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .05), 0 2px 4px -1px rgba(0, 0, 0, .05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, .05), 0 4px 6px -2px rgba(0, 0, 0, .05);
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Header height (used by spacer if header is fixed) */
-  --header-height: 76px;
 }
 
-* { box-sizing: border-box; }
+/* Base element styling */
+* {
+  box-sizing: border-box;
+}
 
 html, body {
   min-width: 320px;
@@ -70,6 +70,7 @@ a {
   text-decoration: none;
   transition: var(--transition);
 }
+
 a:hover {
   text-decoration: underline;
   color: var(--ink);
@@ -81,11 +82,13 @@ img, video {
   display: block;
 }
 
+/* Set distinct color for headings */
 h1, h2, h3, h4, h5, h6,
 .post-title, .brand, .related-title, .more-heading {
   color: var(--ink);
 }
 
+/* Fluid container */
 .container,
 .site-header .container,
 main.container,
@@ -96,38 +99,27 @@ main.container,
 }
 
 /* =========================================================
-   Header: Glassy Effect & Spacing
+   Header Redesign: Glassy Effect & Improved Spacing
    ========================================================= */
 
 .site-header {
-  position: fixed; /* changed from sticky so blur overlays content */
-  top: 8px;
-  left: 0;
-  right: 0;
+  position: sticky;
+  top: 8px; /* Adds space from the top of the viewport */
   z-index: 10;
   margin-inline: clamp(8px, 2vw, 16px);
   border-radius: 14px;
-
+  
+  /* Initial State (Before Scrolling) */
   background: var(--surface);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-sm);
+
+  /* Smooth transition for all effects */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* reserve space so layout doesn’t jump */
-.header-spacer {
-  height: calc(var(--header-height) + 8px);
-}
 
-/* Glass effect when scrolled */
-:is(.site-header.scrolled, .scrolled .site-header) {
-  background: rgba(255, 255, 255, 0.14) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-color: rgba(229, 231, 235, 0.18) !important;
-  box-shadow: var(--shadow-lg) !important;
 }
-
 .site-header .container {
   display: flex;
   align-items: center;
@@ -136,6 +128,14 @@ main.container,
   position: relative;
 }
 
+/* Apply glass effect when the header itself has the class */
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.1) !important; /* Slightly stronger so blur shows */
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important; /* Safari */
+  border-color: rgba(229, 231, 235, 0.1) !important;
+  box-shadow: var(--shadow-lg) !important;
+/* Brand/title centered */
 .brand {
   position: absolute;
   left: 50%;
@@ -147,35 +147,47 @@ main.container,
   text-decoration: none;
 }
 
+/* Nav links on the right side */
 .nav {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   margin-left: auto;
 }
-.nav-link { color: #0b2f70; opacity: .95; }
-.nav-link:hover { color: var(--accent); opacity: 1; }
+.nav-link {
+  color: #0b2f70;
+  opacity: .95;
+}
+.nav-link:hover {
+  color: var(--accent);
+  opacity: 1;
+}
 
+/* Hamburger & Search Icon Buttons */
 .hamburger,
 .search-btn {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 42px;  /* Wider button for better touch targets */
+  height: 42px; /* Making it a perfect circle */
   padding: 0;
   color: var(--ink);
   background: transparent;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 999px; /* This makes it circular */
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
+
 .hamburger:hover,
 .search-btn:hover {
   background-color: color-mix(in oklab, var(--ink) 5%, transparent);
   border-color: color-mix(in oklab, var(--ink) 20%, transparent);
 }
-.hamburger svg { display: block; }
+
+.hamburger svg { 
+  display: block; 
+}
 .search-btn svg {
   stroke: var(--ink);
   width: 18px;
@@ -185,18 +197,20 @@ main.container,
   fill: none;
 }
 
+/* Search Input Field */
 .search-wrap {
   position: relative;
-  width: 42px;
-  height: 42px;
+  width: 42px; /* Matches button width */
+  height: 42px; /* Matches button height */
   display: grid;
   place-items: center;
   z-index: 5;
 }
+
 .search-input {
   position: absolute;
   top: 50%;
-  right: -8px;
+  right: -8px; /* Better spacing from the search icon */
   transform: translateY(-50%) scaleX(0.7);
   transform-origin: right center;
   width: 260px;
@@ -211,6 +225,7 @@ main.container,
   font-family: var(--font-bn);
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
+
 .search-wrap.open .search-input {
   opacity: 1;
   pointer-events: auto;
@@ -226,9 +241,10 @@ main.container,
   display: block;
   animation: menuIn .14s ease;
 }
+
 .menu-panel {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 12px); /* More space between button and dropdown */
   right: 0;
   min-width: 240px;
   z-index: 20;
@@ -255,14 +271,16 @@ main.container,
    Main Content & Post Styles
    ========================================================= */
 
+/* Home post list cards - Mobile First */
 .post-list {
   display: grid;
   gap: 24px;
   padding-block: var(--space-5);
 }
+
 .post-card {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr; /* Mobile default: single column */
   gap: var(--space-3);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -271,11 +289,13 @@ main.container,
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
+
 .post-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
   border-color: #d1d5db;
 }
+
 .thumb {
   display: block;
   width: 100%;
@@ -284,16 +304,19 @@ main.container,
   border-radius: var(--radius);
   background: #f3f4f6;
 }
+
 .thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .post-card .title {
   margin: 0 0 var(--space-2) 0;
   font-size: 20px;
   line-height: 1.7;
 }
+
 .post-card .title a {
   color: var(--ink);
   text-decoration: none;
@@ -303,15 +326,27 @@ main.container,
   background-position: 0 100%;
   transition: background-size .15s ease;
 }
-.post-card .title a:hover { background-size: 100% 1px; }
-.excerpt { margin: 0 0 var(--space-2) 0; opacity: .9; }
+
+.post-card .title a:hover {
+  background-size: 100% 1px;
+}
+
+.excerpt {
+  margin: 0 0 var(--space-2) 0;
+  opacity: .9;
+}
+
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
   color: var(--muted);
 }
-.meta .dot { opacity: .6; }
+
+.meta .dot {
+  opacity: .6;
+}
+
 .cat-chip {
   background: var(--accent-light);
   color: var(--accent);
@@ -321,11 +356,13 @@ main.container,
   text-decoration: none;
   transition: var(--transition);
 }
+
 .cat-chip:hover {
   background: #dbeafe;
   color: var(--accent);
   text-decoration: none;
 }
+
 .post-card .btn-outline-black {
   display: inline-block;
   border: 1.5px solid var(--accent) !important;
@@ -338,12 +375,14 @@ main.container,
   text-decoration: none;
   font-weight: 700;
 }
+
 .post-card .btn-outline-black:hover {
   background: var(--accent-light);
   border-color: #0b2f70 !important;
   text-decoration: none;
 }
 
+/* Pagination */
 .pagination {
   display: flex;
   gap: 8px;
@@ -369,17 +408,19 @@ main.container,
   border-color: var(--accent);
 }
 
-/* Single Post Page */
+/* Single Post Page - Mobile First */
 article.post {
   padding-block: var(--space-5);
-  max-width: 100%;
+  max-width: 100%; /* Use the container's padding */
   margin-inline: auto;
 }
 .post-meta {
   color: var(--muted);
   margin-bottom: var(--space-4);
 }
-.post-cover { margin: 0 0 var(--space-4) 0; }
+.post-cover {
+  margin: 0 0 var(--space-4) 0;
+}
 .post-cover img {
   width: 100%;
   height: auto;
@@ -389,7 +430,9 @@ article.post {
   font-size: clamp(16px, 0.9vw + 12px, 20px);
   line-height: 1.85;
 }
-.post-body p { margin: 0 0 var(--space-3) 0; }
+.post-body p {
+  margin: 0 0 var(--space-3) 0;
+}
 .post-body h2 {
   font-size: 22px;
   margin: var(--space-4) 0 var(--space-2);
@@ -409,7 +452,7 @@ article.post {
   color: var(--ink);
 }
 
-/* Arabic text */
+/* Arabic text handling */
 .ar-inline {
   font-family: var(--font-ar);
   font-weight: 400;
@@ -444,11 +487,22 @@ article.post {
   gap: 14px;
   align-items: start;
 }
-.related-card .thumb { width: 100%; height: 70px; }
-.related-card .title { font-size: 16px; margin: 0 0 4px 0; }
-.related-card .excerpt { font-size: 14px; color: var(--muted); margin: 0; }
-
-.more { margin: 48px 0 24px; }
+.related-card .thumb {
+  width: 100%;
+  height: 70px;
+}
+.related-card .title {
+  font-size: 16px;
+  margin: 0 0 4px 0;
+}
+.related-card .excerpt {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+.more {
+  margin: 48px 0 24px;
+}
 .more-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -477,10 +531,22 @@ article.post {
   background: var(--muted);
   display: block;
 }
-.more-thumb img { width: 100%; height: 100%; object-fit: cover; }
-.more-title { font-size: 1.05rem; line-height: 1.35; }
-.more-title a { text-decoration: none; }
-.more-excerpt { font-size: .95rem; opacity: .85; }
+.more-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.more-title {
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+.more-title a {
+  text-decoration: none;
+}
+.more-excerpt {
+  font-size: .95rem;
+  opacity: .85;
+}
 
 /* =========================================================
    Footer
@@ -494,14 +560,33 @@ article.post {
 }
 
 /* =========================================================
-   Media Queries
+   Media Queries & Responsive Design FIX
    ========================================================= */
 
+/* For Tablets (and larger) */
 @media (min-width: 768px) {
-  article.post { max-width: var(--read-max); }
-  .post-card { grid-template-columns: minmax(220px, 32vw) 1fr; }
+  /* Widen the main text area for better reading on tablets */
+  article.post {
+    max-width: var(--read-max); /* Constrains line length to 70 characters */
+  }
+
+  /* Change post cards to have the image on the left */
+  .post-card {
+    grid-template-columns: minmax(220px, 32vw) 1fr;
+  }
 }
 
+/* For Desktops (and larger) */
 @media (min-width: 1024px) {
-  article.post { max-width: 85ch; }
+  /* Make the reading width even more comfortable on wide screens */
+  article.post {
+    max-width: 85ch; /* A bit wider than the default for desktops */
+  }
 }
+
+
+
+
+
+
+
