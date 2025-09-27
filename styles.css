@@ -77,7 +77,7 @@ main.container,
   display: flex; align-items: center; gap: var(--space-3);
   min-height: 64px;
 }
-.brand{ font-size: 26px; color: var(--ink); text-decoration: none; }
+.brand{ font-size: 26px; color: var(--accent); text-decoration: none; }
 .nav{ margin-left: auto; display: flex; align-items: center; gap: var(--space-3); }
 .nav-link{ color: var(--ink); opacity: .9; }
 .icon-btn{
@@ -92,7 +92,7 @@ main.container,
 .menu{ position: relative; }
 .hamburger{
   min-width: 36px; min-height: 36px; font-size: 18px; line-height: 1;
-  color: var(--ink); background: none; border: 0; display: flex; place-items: center;
+  color: var(--accent); background: none; border: 0; display: flex; place-items: center;
 }
 .hamburger svg{ display: block; }
 .menu-panel{
@@ -215,7 +215,7 @@ main.container,
   line-height: 1.7;
   margin: 0 0 var(--space-2) 0;
   /* changed: page/post title in blue */
-  color: var(--accent);
+  color: var(--ink);
 }
 .post-meta{ color: var(--muted); margin-bottom: var(--space-4); }
 .post-cover{ margin: 0 0 var(--space-4) 0; }
@@ -225,7 +225,7 @@ main.container,
 /* changed: only body text (not headings) to blueish gray */
 .post-body p{ margin: 0 0 var(--space-3) 0; color: #5f6b85; }
 .post-body ul li,
-.post-body ol li{ color: #5f6b85; }
+.post-body ol li{ color: #212137; }
 .post-body h2{ font-size: 22px; margin: var(--space-4) 0 var(--space-2); line-height: 1.7; }
 .post-body h3{ font-size: 19px; margin: var(--space-3) 0 var(--space-2); line-height: 1.7; }
 .post-body blockquote{
@@ -372,3 +372,4 @@ main.container,
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 24px);
 }
+
