@@ -223,9 +223,9 @@ main.container,
 
 .post-body{ font-size: clamp(16px, 0.9vw + 12px, 20px); line-height: 1.85; }
 /* changed: only body text (not headings) to blueish gray */
-.post-body p{ margin: 0 0 var(--space-3) 0; color: #5f6b85; }
-.post-body ul li,
-.post-body ol li{ color: #212137; }
+.post-body p{ margin: 0 0 var(--space-3) 0; color: #080822; }
+.post-body ul li{ color: #080822; }
+.post-body ol li{ color: #080822; }
 .post-body h2{ font-size: 22px; margin: var(--space-4) 0 var(--space-2); line-height: 1.7; }
 .post-body h3{ font-size: 19px; margin: var(--space-3) 0 var(--space-2); line-height: 1.7; }
 .post-body blockquote{
@@ -372,4 +372,5 @@ main.container,
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 24px);
 }
+
 
