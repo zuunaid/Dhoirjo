@@ -118,7 +118,7 @@ main.container,
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Scrolled "Glassmorphism" State */
+/* This is the style that gets applied by the JavaScript on scroll */
 .scrolled .site-header {
   background: rgba(255, 255, 255, 0.75); /* Semi-transparent for glassy effect */
   backdrop-filter: saturate(180%) blur(12px);
