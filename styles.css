@@ -118,8 +118,15 @@ main.container,
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
+/* This is the style that gets applied by the JavaScript on scroll */
+.scrolled .site-header {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: var(--shadow-lg) !important;
 }
+
 .site-header .container {
   display: flex;
   align-items: center;
@@ -128,13 +135,6 @@ main.container,
   position: relative;
 }
 
-/* Apply glass effect when the header itself has the class */
-.site-header.scrolled {
-  background: rgba(255, 255, 255, 0.1) !important; /* Slightly stronger so blur shows */
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important; /* Safari */
-  border-color: rgba(229, 231, 235, 0.1) !important;
-  box-shadow: var(--shadow-lg) !important;
 /* Brand/title centered */
 .brand {
   position: absolute;
