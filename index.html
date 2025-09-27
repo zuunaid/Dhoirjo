@@ -86,17 +86,20 @@
     });
   </script>
  <script>
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 10) {
-      document.body.classList.add('scrolled');
+  const header = document.querySelector('.site-header');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      header.classList.add('scrolled');
     } else {
-      document.body.classList.remove('scrolled');
+      header.classList.remove('scrolled');
     }
   });
 </script>
 
 </body>
 </html>
+
 
 
 
