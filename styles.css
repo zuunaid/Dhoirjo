@@ -55,21 +55,25 @@ body{
   background: var(--bg);
   color: var(--ink-body); /* MODIFIED: Use softer body color */
   font-family: var(--font-bn);
-/* Header — Light blue + dark text, glass on scroll */
+
+
+/* Header — Rounded, very light blue, glass on scroll */
 .site-header{
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #f3f8ff;                     /* very light blue */
-  color: var(--accent);                    /* deep blue from :root */
-  border-bottom: 1px solid #e1e8ff;
-  transition: box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  background: #f9fbff;                     /* extra light blue */
+  color: var(--accent);                    /* deep blue text/icons */
+  border-bottom: 1px solid #e0e9ff;
+  border-radius: 14px;                     /* rounded rectangle */
+  margin: 6px 8px;                         /* spacing so rounded edges show */
+  transition: box-shadow .25s ease, background .25s ease, border-color .25s ease;
 }
 
 .scrolled .site-header{
-  background: rgba(255,255,255,.55);       /* glass when scrolled */
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  background: rgba(255,255,255,.55);       /* glass effect */
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
   border-color: rgba(13,61,140,.15);
   box-shadow: var(--shadow-lg);
 }
@@ -79,10 +83,11 @@ body{
   align-items: center;
   justify-content: space-between;
   min-height: 64px;
-  position: relative;                      /* for centering brand */
+  position: relative;
+  border-radius: 14px;                     /* rounded inner too */
 }
 
-/* Centered brand/title in dark blue */
+/* brand/title centered */
 .brand{
   position: absolute;
   left: 50%;
@@ -90,11 +95,11 @@ body{
   font-size: 26px;
   font-weight: 800;
   letter-spacing: .3px;
-  color: var(--accent);                    /* dark blue text */
+  color: var(--accent);
   text-decoration: none;
 }
 
-/* Right-aligned nav stays the same, just dark blue */
+/* nav links right side */
 .nav{
   display: flex;
   align-items: center;
@@ -102,21 +107,26 @@ body{
   margin-left: auto;
 }
 .nav-link{
-  color: #0b2f70;                          /* darker blue for links */
+  color: #0b2f70;                          /* darker blue links */
   opacity: .95;
 }
 .nav-link:hover{ color: var(--accent); opacity: 1; }
 
-/* Icon buttons in dark blue, subtle hover */
+/* icon buttons rounded */
 .icon-btn{
   border: 1px solid rgba(13,61,140,.18);
   background: transparent;
   color: #0b2f70;
+  border-radius: 999px;                    /* full rounded */
 }
 .icon-btn:hover{
-  background: rgba(13,61,140,.06);
+  background: rgba(13,61,140,.08);
   border-color: rgba(13,61,140,.28);
 }
+
+/* hamburger & search icon strokes */
+.hamburger{ color:#0b2f70; }
+.search-btn svg{ stroke:#0b2f70; }   
 
 /* Hamburger & search icon strokes */
 .hamburger{ color:#0b2f70; }
@@ -423,6 +433,7 @@ main.container,
   border-color: #0b2f70;
   text-decoration: none;
 }
+
 
 
 
