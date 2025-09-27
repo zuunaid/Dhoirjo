@@ -354,7 +354,7 @@ main.container,
   margin: 2px 0 8px 0;
   font-size: 20px;
   line-height: 1.7;
-  color: #143435;
+  color: #143435 !important;
 }
 .post-card .excerpt{
   margin: 0 0 10px 0;
@@ -374,6 +374,7 @@ main.container,
   margin-inline: auto;
   padding-inline: clamp(12px, 3vw, 24px);
 }
+
 
 
 
