@@ -57,6 +57,7 @@ html, body {
 body {
   margin: 0;
   background: var(--bg);
+  background-image: linear-gradient(to bottom, #ffffff, #f8f9fa);
   color: var(--ink-body);
   font-family: var(--font-bn);
   font-weight: 700;
@@ -583,4 +584,5 @@ article.post {
     max-width: 85ch; /* A bit wider than the default for desktops */
   }
 }
+
 
