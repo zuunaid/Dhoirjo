@@ -120,11 +120,11 @@ main.container,
 
 /* Apply glass effect when the header itself has the class */
 .site-header.scrolled {
-  background: rgba(255, 255, 255, 0.1); /* Slightly stronger so blur shows */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px); /* Safari */
-  border-color: rgba(229, 231, 235, 0.1);
-  box-shadow: var(--shadow-lg);
+  background: rgba(255, 255, 255, 0.1) !important; /* Slightly stronger so blur shows */
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important; /* Safari */
+  border-color: rgba(229, 231, 235, 0.1) !important;
+  box-shadow: var(--shadow-lg) !important;
 }
 .site-header .container {
   display: flex;
@@ -582,6 +582,7 @@ article.post {
     max-width: 85ch; /* A bit wider than the default for desktops */
   }
 }
+
 
 
 
