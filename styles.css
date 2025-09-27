@@ -80,7 +80,63 @@ main.container,
   padding-inline: var(--gutter);
 }
 
+/* Header - Premium + centered brand */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(90deg, #0d3d8c, #1553b7);
+  color: #fff;
+  border-bottom: none;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: box-shadow .2s ease;
+}
 
+.scrolled .site-header{ box-shadow: var(--shadow-lg); }
+
+.site-header .container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  position: relative;
+}
+
+/* brand/title dead center */
+.brand{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: .3px;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* nav on right */
+.nav{
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+
+/* nav + icons styling */
+.nav-link{ color: rgba(255,255,255,.92); }
+.nav-link:hover{ color: #fff; opacity: 1; }
+.icon-btn{
+  border-color: rgba(255,255,255,.25);
+  color: #fff;
+}
+.icon-btn:hover{
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.35);
+}
+.hamburger{ color:#fff; }
+.search-btn svg{ stroke:#fff; }
 
 /* Hamburger menu - Revised with new colors and shadow */
 .menu-panel{
@@ -358,4 +414,5 @@ main.container,
   border-color: #0b2f70;
   text-decoration: none;
 }
+
 
