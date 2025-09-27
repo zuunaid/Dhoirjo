@@ -85,8 +85,20 @@
       window.Blog.initHome();
     });
   </script>
+  <script>
+  // This script adds the 'scrolled' class to the body when you scroll down
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 10) {
+      document.body.classList.add('scrolled');
+    } else {
+      document.body.classList.remove('scrolled');
+    }
+  });
+</script>
+
 </body>
 </html>
+
 
 
 
