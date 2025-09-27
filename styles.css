@@ -120,9 +120,9 @@ main.container,
 
 /* This is the style that gets applied by the JavaScript on scroll */
 .scrolled .site-header {
-  background: rgba(255, 255, 255, 0.75); /* Semi-transparent for glassy effect */
-  backdrop-filter: saturate(180%) blur(12px);
-  -webkit-backdrop-filter: saturate(180%) blur(12px); /* Safari support */
+  background: rgba(255, 255, 255, 0.8); /* Adjusted transparency for a better glass effect */
+  backdrop-filter: saturate(180%) blur(16px); /* Increased blur for a stronger effect */
+  -webkit-backdrop-filter: saturate(180%) blur(16px); /* Safari support */
   border-color: rgba(229, 231, 235, 0.7); /* Slightly transparent border */
   box-shadow: var(--shadow-lg); /* Deeper shadow when scrolled */
 }
