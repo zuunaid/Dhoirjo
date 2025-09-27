@@ -80,49 +80,202 @@ main.container,
   padding-inline: var(--gutter);
 }
 
-/* Header - Revised with new colors and shadow */
-.site-header{
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(248, 249, 250, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+/* =========================================================
+   NEW PREMIUM HEADER STYLES 
+   (Replace your existing header CSS with this block)
+   ========================================================= */
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(248, 249, 250, 0.9); /* Slightly less transparent for clarity */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
-  transition: box-shadow .2s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.scrolled .site-header{ box-shadow: var(--shadow-md); }
-.site-header .container{
-  display: flex; align-items: center; gap: var(--space-3);
-  min-height: 64px;
+
+.scrolled .site-header {
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
 }
-.brand{ font-size: 26px; text-decoration: none; }
-.nav{ margin-left: auto; display: flex; align-items: center; gap: var(--space-3); }
-.nav-link{ color: var(--ink-body); opacity: .9; transition: var(--transition); }
-.nav-link:hover { color: var(--accent); opacity: 1; }
-.icon-btn{
-  border: 1px solid var(--line);
-  background: transparent;
-  padding: 6px 10px;
-  border-radius: 999px;
-  cursor: pointer;
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Creates the left/right alignment */
+  gap: var(--space-3);
+  min-height: 72px; /* A bit taller for a more premium feel */
+}
+
+.brand {
+  font-size: 28px;
+  text-decoration: none;
   transition: var(--transition);
 }
-.icon-btn:hover { background: var(--accent-light); border-color: var(--accent); }
-
-/* Hamburger menu - Revised with new colors and shadow */
-.menu-panel{
-  position: absolute; top: calc(100% + 8px); right: 0;
-  min-width: 220px; z-index: 20;
-  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
-  box-shadow: var(--shadow-lg); padding: 8px; display: none;
+.brand:hover {
+  opacity: 0.8;
 }
-.menu-panel a { color: var(--ink); }
-.menu-panel a:hover{ background: var(--accent-light); color: var(--accent); }
 
-/* Search - Revised with new colors and shadow */
-.search-input{
-  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+.nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1); /* Tighter gap for a cleaner nav cluster */
+}
+
+/* Premium animated underline for nav links */
+.nav-link {
+  position: relative;
+  padding: 8px 12px;
+  color: var(--ink-body);
+  opacity: 0.9;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--accent);
+  opacity: 1;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 50%;
+}
+
+/* Unified style for icon buttons */
+.header-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--ink);
+  transition: var(--transition);
+}
+
+.header-icon-btn:hover {
+  background-color: var(--accent-light);
+  color: var(--accent);
+}
+
+.header-icon-btn svg {
+  display: block;
+}
+
+/* Applying the unified style */
+.hamburger {
+  /* Inherits from .header-icon-btn, add specifics if needed */
+  font-size: 20px;
+}
+
+.search-btn {
+   /* Inherits from .header-icon-btn, add specifics if needed */
+}
+
+/* Hamburger menu */
+.menu {
+  position: relative;
+}
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 12px); /* More distance */
+  right: 0;
+  min-width: 240px;
+  z-index: 20;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-1);
+  display: none;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.menu.open .menu-panel {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-panel a {
+  display: block;
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: var(--ink);
+}
+.menu-panel a:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+/* Search */
+.search-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  /* Remove fixed width/height to let the button define it */
+}
+
+.search-input {
+  position: absolute;
+  top: 50%;
+  right: -10px; /* Adjust positioning */
+  transform: translateY(-50%) scaleX(0.8);
+  transform-origin: right center;
+  width: 280px;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 10px 18px;
+  border-radius: 999px;
   box-shadow: var(--shadow-lg);
   font-family: var(--font-bn);
+  outline: none;
+}
+.search-input:focus {
+  border-color: var(--accent);
+}
+
+.search-wrap.open .search-input {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) scaleX(1);
+}
+
+/* Minimal search icon */
+.search-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor; /* Inherit color from parent */
+  stroke-width: 2;
+  fill: none;
+}
+
   /* Other properties unchanged */
   position: absolute; top: 50%; right: 0; transform: translateY(-50%) scaleX(.6);
   transform-origin: right center;
@@ -321,3 +474,4 @@ main.container,
   .more-grid, .related-grid { grid-template-columns: 1fr !important; }
   .thumb { height: 160px; }
 }
+
