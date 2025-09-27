@@ -85,19 +85,25 @@
       window.Blog.initHome();
     });
   </script>
-  <script>
+ <script>
   // This script adds the 'scrolled' class to the body when you scroll down
   window.addEventListener('scroll', function() {
+    
+    // We check if the user has scrolled more than 10 pixels from the top
     if (window.scrollY > 10) {
+      // If they have, add the 'scrolled' class to the body tag
       document.body.classList.add('scrolled');
     } else {
+      // If they scroll back to the top, remove the 'scrolled' class
       document.body.classList.remove('scrolled');
     }
+    
   });
 </script>
 
 </body>
 </html>
+
 
 
 
