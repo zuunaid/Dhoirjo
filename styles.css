@@ -376,9 +376,6 @@ main.container,
   color: #143435 !important;
 }
 
-/* Remove the old side-by-side grid definition for desktop */
-/* The previous media queries for mobile can remain as they are harmless, 
-   but this new setup is naturally responsive. */
 
 
 
